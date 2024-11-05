@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Effet de Saisie Dynamique</title>
+    <style>
+        .head {
+            padding-top: calc(6rem + 74px);
+            padding-bottom: 6rem;
+            min-height: 100vh; /* Pour occuper toute la hauteur de l'écran */
+            display: flex;
+            align-items: center; /* Centrer verticalement le contenu */
+            background-color: #fff; /* Couleur de fond de la section */
+        }
+        .card {
+            background-color: #0e243b; /* Couleur de la card */
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 1200px; /* Largeur max de la card */
+            margin: auto; /* Centrer la card */
+        }
+        .head .head-heading {
+            font-size: 4.75rem;
+            line-height: 4.75rem;
+        }
+        .head .head-subheading {
+            font-size: 2.25rem;
+        }
+        .dynamic-line {
+            font-size: 2.25rem;
+            display: inline-block;
+        }
+        .typing-effect {
+            display: inline-block;
+            border-radius: 10px; /* Bords arrondis */
+            padding: 0.2rem 0.5rem; /* Espacement intérieur */
+            color: #082743; /* Couleur du texte */
+            font-weight: bold; /* Texte en gras */
+        }
+        .with-background {
+            background-color: #fff; /* Couleur de fond */
+        }
+        .image-container {
+            background-color: #2c3e50; /* Fond blanc sous l'image */
+            border: 5px solid #2c3e50; /* Bord blanc */
+            border-radius: 50%; /* Pour arrondir le contour */
+            padding: 10px; /* Espacement entre l'image et le bord */
+            display: inline-block;
+        }
+        .masthead-avatar {
+            border-radius: 50%; /* Pour rendre l'image elle-même circulaire */
+        }
+    </style>
+</head>
+<body>
+
+<section class="masthead text-white text-center head">
+    <div class="card">
+        <div class="container">
+            <div class="row align-items-center">
+                <!-- Colonne pour le texte statique à gauche -->
+                <div class="col-md-6 text-md-start text-center">
+                    <h3 class="head-subheading mb-3" style="color: #ffffff;">Salut, c'est moi !</h3>
+                    <h2 class="head-heading mb-3" style="color: #ffffff;">Arthur Bouchaud</h2>
+                    <!-- Séparation de la ligne dynamique -->
+                    <div class="dynamic-line mb-3 display-1" style="color: #ffffff;">et je suis
+                        <span id="dynamic-text" class="typing-effect"></span>
+                    </div>
+                </div>
+
+                <!-- Colonne pour l'image à droite -->
+                <div class="col-md-6 text-center">
+                    <div class="image-container">
+                        <img class="masthead-avatar img-fluid" src="{{ asset('img/avataaars.svg') }}" alt="Avatar image" />
+                    </div>
+                </div>
+            </div>
+            <!-- Icon Divider-->
+            <div class="divider-custom divider-light">
+                <div class="divider-custom-line"></div>
+                <div class="divider-custom-icon"><i class="fa-solid fa-microchip"></i></div>
+                <div class="divider-custom-line"></div>
+            </div>
+            <!-- Boutons CV et Contactez-moi alignés au centre et de même taille -->
+            <div class="d-flex justify-content-center mt-4">
+                <div class="row g-2" style="width: 300px;">
+                    <div class="col">
+                        <button class="btn btn-outline-light w-100"><i class="fa-solid fa-download"></i> CV</button>
+                    </div>
+                    <div class="col">
+                        <button class="btn btn-custom w-100">Contactez-moi !</button>
+                    </div>
+                </div>
+            </div>
+            <!-- Boutons des réseaux sociaux sur une même ligne -->
+            <div class="d-flex justify-content-center mt-4">
+                <div class="d-flex gap-2">
+                    <button class="btn btn-custom"><i class="fa-brands fa-linkedin fa-2x"></i></button>
+                    <button class="btn btn-custom"><i class="fa-brands fa-github fa-2x"></i></button>
+                    <button class="btn btn-custom"><i class="fa-brands fa-whatsapp fa-2x"></i></button>
+                    <button class="btn btn-custom"><i class="fa-brands fa-facebook fa-2x"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const words = ["Full-Stack", "Passionné", "CTF Player"];
+        let wordIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typingSpeed = 180; // Vitesse de saisie
+        const deletingSpeed = 130; // Vitesse de suppression
+        const pauseBetweenWords = 800; // Pause avant de commencer le mot suivant
+        const dynamicTextElement = document.getElementById('dynamic-text');
+
+        function typeWords() {
+            const currentWord = words[wordIndex];
+
+            if (!isDeleting && charIndex === 0) {
+                dynamicTextElement.classList.add('with-background');
+                // Toujours afficher un espace insécable au début
+                dynamicTextElement.textContent = '\u00A0';
+            }
+
+            if (isDeleting) {
+                // Supprimer les caractères tout en gardant les espaces
+                dynamicTextElement.textContent = '\u00A0' + currentWord.substring(0, charIndex--) + '\u00A0';
+                if (charIndex < 0) { // Arrêter la suppression lorsque seul l'espace reste
+                    dynamicTextElement.textContent = '\u00A0';
+                    dynamicTextElement.classList.remove('with-background');
+                    isDeleting = false;
+                    wordIndex = (wordIndex + 1) % words.length;
+                    setTimeout(typeWords, 500);
+                } else {
+                    setTimeout(typeWords, deletingSpeed);
+                }
+            } else {
+                // Ajouter les caractères tout en gardant les espaces
+                dynamicTextElement.textContent = '\u00A0' + currentWord.substring(0, charIndex++) + '\u00A0';
+                if (charIndex > currentWord.length) {
+                    isDeleting = true;
+                    setTimeout(typeWords, pauseBetweenWords);
+                } else {
+                    setTimeout(typeWords, typingSpeed);
+                }
+            }
+        }
+
+        typeWords();
+    });
+</script>
+</body>
+</html>
