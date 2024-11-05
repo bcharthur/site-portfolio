@@ -1,25 +1,329 @@
-<!-- projets Section-->
-<section class="page-section bg-primary text-white mb-0" id="projets">
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Mes Projets</title>
+    <style>
+        /* Styles globaux */
+        body {
+            background-color: #fff;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Styles pour les projets */
+        .project-item {
+            border: 1px solid #ccc;
+            border-radius: 15px;
+            overflow: hidden;
+            padding: 10px;
+            background-color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .project-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #2c3e50;
+            border-top: 1px solid #ccc;
+            border-bottom-left-radius: 15px;
+            border-bottom-right-radius: 15px;
+            font-size: 1.5rem; /* Taille des titres */
+            color: #fff; /* Couleur du texte */
+        }
+
+        .icon-container {
+            display: flex;
+            gap: 5px; /* Espacement entre les icônes */
+        }
+
+        .project-title i, .project-title img {
+            font-size: 1.8rem; /* Taille des icônes */
+            color: #fff; /* Couleur des icônes */
+            height: 25px; /* Hauteur de l'image */
+            width: 25px; /* Largeur de l'image */
+        }
+
+        .project-title img {
+            filter: brightness(0) invert(1); /* Transformation du noir en blanc */
+        }
+
+        .project-title .rootme-img {
+            width: 50px; /* Taille de l'image Root Me */
+            height: auto; /* Conserve le ratio d'aspect */
+            margin-right: 10px; /* Espacement à droite */
+        }
+
+        /* Styles pour Swiper */
+        .swiper {
+            width: 100%;
+            max-width: 1200px; /* Largeur maximale */
+            margin: 0 auto; /* Centre le carrousel horizontalement */
+            padding: 20px 0;
+        }
+
+        .swiper-slide {
+            display: flex;
+            justify-content: center;
+            /* Retirer la largeur fixe pour laisser Swiper gérer la taille */
+        }
+
+        .swiper-slide .project-item {
+            width: 100%;
+            max-width: 300px; /* Largeur maximale des cartes */
+            margin: 0 auto; /* Centre la carte dans la slide */
+        }
+
+        /* Ajustements pour les boutons de navigation */
+        .swiper-button-prev,
+        .swiper-button-next {
+            color: #2c3e50; /* Couleur des flèches de navigation */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .swiper-slide .project-item {
+                max-width: 250px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .swiper-slide .project-item {
+                max-width: 200px;
+            }
+        }
+    </style>
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.3.0/css/all.css" crossorigin="anonymous">
+
+    <!-- Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+</head>
+<body>
+
+<!-- Projects Section -->
+<section class="page-section portfolio text-custom mb-0 d-flex align-items-center" id="projets" style="min-height: 100vh;">
     <div class="container">
-        <!-- projets Section Heading-->
-        <h2 class="page-section-heading text-center text-uppercase text-white">projets</h2>
+        <!-- Portfolio Section Heading-->
+        <h2 class="page-section-heading text-center text-secondary mb-0">Mes derniers projets</h2>
         <!-- Icon Divider-->
-        <div class="divider-custom divider-light">
+        <div class="divider-custom">
             <div class="divider-custom-line"></div>
-            <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+            <div class="divider-custom-icon"><i class="fa-solid fa-code"></i></div>
             <div class="divider-custom-line"></div>
         </div>
-        <!-- projets Section Content-->
-        <div class="row">
-            <div class="col-lg-4 ms-auto"><p class="lead">Freelancer is a free bootstrap theme created by Start Bootstrap. The download includes the complete source files including HTML, CSS, and JavaScript as well as optional SASS stylesheets for easy customization.</p></div>
-            <div class="col-lg-4 me-auto"><p class="lead">You can create your own custom avatar for the masthead, change the icon in the dividers, and add your email address to the contact form to make it fully functional!</p></div>
+
+        <h1>Projet Full-Stack :</h1>
+        <!-- Portfolio Grid Items-->
+        <div class="row justify-content-center">
+            <!-- Portfolio Item 1-->
+            <div class="col-md-6 col-lg-4 mb-5">
+                <div class="project-item">
+                    <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal1">
+                        <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                            <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                        </div>
+                        <img class="img-fluid" src="{{ asset('img/portfolio/cabin.png')}}" alt="ZouTube" />
+                    </div>
+                    <div class="project-title">
+                        <span>ZouTube</span>
+                        <i class="fa-brands fa-symfony"></i>
+                    </div>
+                </div>
+            </div>
+            <!-- Portfolio Item 2-->
+            <div class="col-md-6 col-lg-4 mb-5">
+                <div class="project-item">
+                    <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal2">
+                        <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                            <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                        </div>
+                        <img class="img-fluid" src="{{ asset('img/portfolio/cake.png')}}" alt="Social Media" />
+                    </div>
+                    <div class="project-title">
+                        <span>Social Media</span>
+                        <img src="{{ asset('img/springboot.png') }}" alt="Spring Boot Logo" />
+                    </div>
+                </div>
+            </div>
+            <!-- Portfolio Item 3-->
+            <div class="col-md-6 col-lg-4 mb-5">
+                <div class="project-item">
+                    <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal3">
+                        <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                            <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                        </div>
+                        <img class="img-fluid" src="{{ asset('img/portfolio/circus.png')}}" alt="IDE Python Online" />
+                    </div>
+                    <div class="project-title">
+                        <span>IDE Python Online</span>
+                        <div class="icon-container">
+                            <i class="fa-brands fa-python"></i>
+                            <i class="fa-brands fa-symfony"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- projets Section Button-->
-        <div class="text-center mt-4">
-            <a class="btn btn-xl btn-outline-light" href="https://startbootstrap.com/theme/freelancer/">
-                <i class="fas fa-download me-2"></i>
-                Free Download!
-            </a>
+
+        <h1>Projet & challenge cyber :</h1>
+        <!-- Swiper Container -->
+        <div class="swiper">
+            <div class="swiper-wrapper">
+                <!-- Portfolio Item 1 -->
+                <div class="swiper-slide">
+                    <div class="project-item">
+                        <div class="portfolio-item mx-auto">
+                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="{{ asset('img/portfolio/game.png')}}" alt="Challenge 1" />
+                        </div>
+                        <div class="project-title">
+                            <img class="rootme-img" src="{{ asset('img/rootme.svg') }}" alt="Root Me Logo" />
+                            <span>Challenge 1</span>
+                            <div class="icon-container">
+                                <i class="fa-brands fa-python"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Portfolio Item 2 -->
+                <div class="swiper-slide">
+                    <div class="project-item">
+                        <div class="portfolio-item mx-auto">
+                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="{{ asset('img/portfolio/safe.png')}}" alt="Challenge 2" />
+                        </div>
+                        <div class="project-title">
+                            <span>Challenge 2</span>
+                            <div class="icon-container">
+                                <i class="fa-brands fa-python"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Portfolio Item 3 -->
+                <div class="swiper-slide">
+                    <div class="project-item">
+                        <div class="portfolio-item mx-auto">
+                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="{{ asset('img/portfolio/submarine.png')}}" alt="Challenge 3" />
+                        </div>
+                        <div class="project-title">
+                            <span>Challenge 3</span>
+                            <div class="icon-container">
+                                <i class="fa-brands fa-python"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Portfolio Item 4 -->
+                <div class="swiper-slide">
+                    <div class="project-item">
+                        <div class="portfolio-item mx-auto">
+                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="{{ asset('img/portfolio/another.png')}}" alt="Challenge 4" />
+                        </div>
+                        <div class="project-title">
+                            <span>Challenge 4</span>
+                            <div class="icon-container">
+                                <i class="fa-brands fa-python"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Portfolio Item 5 -->
+                <div class="swiper-slide">
+                    <div class="project-item">
+                        <div class="portfolio-item mx-auto">
+                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                            </div>
+                            <img class="img-fluid" src="{{ asset('img/portfolio/yet-another.png')}}" alt="Challenge 5" />
+                        </div>
+                        <div class="project-title">
+                            <span>Challenge 5</span>
+                            <div class="icon-container">
+                                <i class="fa-brands fa-python"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Pagination -->
+{#            <div class="swiper-pagination"></div>#}
+            <!-- Navigation Buttons -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
         </div>
     </div>
 </section>
+
+<!-- Initialize Swiper -->
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var swiper = new Swiper('.swiper', {
+            loop: true,
+            autoplay: {
+                delay: 3000, // Délai entre chaque slide en ms
+                disableOnInteraction: false,
+            },
+            centeredSlides: true, // Centre les slides
+            slidesPerView: 3, // Nombre de slides visibles
+            spaceBetween: 30, // Espace entre les slides
+            // pagination: {
+            //     el: '.swiper-pagination',
+            //     clickable: true,
+            // },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            breakpoints: {
+                // Responsive breakpoints
+                320: {
+                    slidesPerView: 1,
+                    spaceBetween: 10
+                },
+                640: {
+                    slidesPerView: 2,
+                    spaceBetween: 20
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 30
+                },
+                1440: {
+                    slidesPerView: 4,
+                    spaceBetween: 40
+                }
+            }
+        });
+
+        // Optionnel : Pause l'autoplay lorsque la souris survole le carrousel
+        var swiperContainer = document.querySelector('.swiper');
+        swiperContainer.addEventListener('mouseenter', () => {
+            swiper.autoplay.stop();
+        });
+        swiperContainer.addEventListener('mouseleave', () => {
+            swiper.autoplay.start();
+        });
+    });
+</script>
+
+</body>
+</html>
