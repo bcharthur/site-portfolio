@@ -4,15 +4,23 @@
     <meta charset="UTF-8">
     <title>Mes Projets</title>
     <style>
-        /* Styles globaux */
+        /* Réinitialisation des styles de base */
+        * {
+            box-sizing: border-box;
+        }
+
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden; /* Empêche le défilement horizontal */
+        }
+
         body {
             background-color: #fff;
             font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
         }
 
-        /* Styles pour les projets */
+        /* Styles pour les éléments de projet */
         .project-item {
             border: 1px solid #ccc;
             border-radius: 15px;
@@ -20,6 +28,7 @@
             padding: 10px;
             background-color: #2c3e50;
             margin-bottom: 20px;
+            width: 100%; /* S'assure que l'élément remplit la slide */
         }
 
         .project-title {
@@ -31,7 +40,7 @@
             border-top: 1px solid #ccc;
             border-bottom-left-radius: 15px;
             border-bottom-right-radius: 15px;
-            font-size: 1.5rem; /* Taille des titres */
+            font-size: 1.5rem; /* Augmente la taille des titres */
             color: #fff; /* Couleur du texte */
         }
 
@@ -48,7 +57,7 @@
         }
 
         .project-title img {
-            filter: brightness(0) invert(1); /* Transformation du noir en blanc */
+            filter: brightness(0) invert(1); /* Transforme le noir en blanc */
         }
 
         .project-title .rootme-img {
@@ -61,29 +70,31 @@
         .swiper {
             width: 100%;
             max-width: 1200px; /* Largeur maximale */
-            margin: 0 auto; /* Centre le carrousel horizontalement */
+            margin: 0 auto; /* Centre horizontalement */
             padding: 20px 0;
+            overflow: hidden; /* Empêche le débordement */
         }
 
         .swiper-slide {
             display: flex;
             justify-content: center;
-            /* Retirer la largeur fixe pour laisser Swiper gérer la taille */
+            align-items: center;
+            /* Swiper gère la largeur des slides */
         }
 
         .swiper-slide .project-item {
-            width: 100%;
             max-width: 300px; /* Largeur maximale des cartes */
+            width: 100%;
             margin: 0 auto; /* Centre la carte dans la slide */
         }
 
-        /* Ajustements pour les boutons de navigation */
+        /* Styles pour les boutons de navigation */
         .swiper-button-prev,
         .swiper-button-next {
             color: #2c3e50; /* Couleur des flèches de navigation */
         }
 
-        /* Responsive adjustments */
+        /* Ajustements responsives */
         @media (max-width: 1024px) {
             .swiper-slide .project-item {
                 max-width: 250px;
@@ -108,27 +119,30 @@
 </head>
 <body>
 
-<!-- Projects Section -->
+<!-- Section Projets -->
 <section class="page-section portfolio text-custom mb-0 d-flex align-items-center" id="projets" style="min-height: 100vh;">
     <div class="container">
-        <!-- Portfolio Section Heading-->
+        <!-- Titre de la section -->
         <h2 class="page-section-heading text-center text-secondary mb-0">Mes derniers projets</h2>
-        <!-- Icon Divider-->
+        <!-- Divider avec icône -->
         <div class="divider-custom">
             <div class="divider-custom-line"></div>
             <div class="divider-custom-icon"><i class="fa-solid fa-code"></i></div>
             <div class="divider-custom-line"></div>
         </div>
 
+        <!-- Sous-titre Projet Full-Stack -->
         <h1>Projet Full-Stack :</h1>
-        <!-- Portfolio Grid Items-->
+        <!-- Grille des projets Full-Stack -->
         <div class="row justify-content-center">
-            <!-- Portfolio Item 1-->
+            <!-- Projet 1 -->
             <div class="col-md-6 col-lg-4 mb-5">
                 <div class="project-item">
                     <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal1">
                         <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                            <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                            <div class="portfolio-item-caption-content text-center text-white">
+                                <i class="fas fa-plus fa-3x"></i>
+                            </div>
                         </div>
                         <img class="img-fluid" src="{{ asset('img/portfolio/cabin.png')}}" alt="ZouTube" />
                     </div>
@@ -138,12 +152,14 @@
                     </div>
                 </div>
             </div>
-            <!-- Portfolio Item 2-->
+            <!-- Projet 2 -->
             <div class="col-md-6 col-lg-4 mb-5">
                 <div class="project-item">
                     <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal2">
                         <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                            <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                            <div class="portfolio-item-caption-content text-center text-white">
+                                <i class="fas fa-plus fa-3x"></i>
+                            </div>
                         </div>
                         <img class="img-fluid" src="{{ asset('img/portfolio/cake.png')}}" alt="Social Media" />
                     </div>
@@ -153,12 +169,14 @@
                     </div>
                 </div>
             </div>
-            <!-- Portfolio Item 3-->
+            <!-- Projet 3 -->
             <div class="col-md-6 col-lg-4 mb-5">
                 <div class="project-item">
                     <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal3">
                         <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                            <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                            <div class="portfolio-item-caption-content text-center text-white">
+                                <i class="fas fa-plus fa-3x"></i>
+                            </div>
                         </div>
                         <img class="img-fluid" src="{{ asset('img/portfolio/circus.png')}}" alt="IDE Python Online" />
                     </div>
@@ -173,16 +191,19 @@
             </div>
         </div>
 
+        <!-- Sous-titre Projet & challenge cyber -->
         <h1>Projet & challenge cyber :</h1>
-        <!-- Swiper Container -->
+        <!-- Conteneur Swiper -->
         <div class="swiper">
             <div class="swiper-wrapper">
-                <!-- Portfolio Item 1 -->
+                <!-- Challenge 1 -->
                 <div class="swiper-slide">
                     <div class="project-item">
                         <div class="portfolio-item mx-auto">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                                <div class="portfolio-item-caption-content text-center text-white">
+                                    <i class="fas fa-plus fa-3x"></i>
+                                </div>
                             </div>
                             <img class="img-fluid" src="{{ asset('img/portfolio/game.png')}}" alt="Challenge 1" />
                         </div>
@@ -195,12 +216,14 @@
                         </div>
                     </div>
                 </div>
-                <!-- Portfolio Item 2 -->
+                <!-- Challenge 2 -->
                 <div class="swiper-slide">
                     <div class="project-item">
                         <div class="portfolio-item mx-auto">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                                <div class="portfolio-item-caption-content text-center text-white">
+                                    <i class="fas fa-plus fa-3x"></i>
+                                </div>
                             </div>
                             <img class="img-fluid" src="{{ asset('img/portfolio/safe.png')}}" alt="Challenge 2" />
                         </div>
@@ -212,12 +235,14 @@
                         </div>
                     </div>
                 </div>
-                <!-- Portfolio Item 3 -->
+                <!-- Challenge 3 -->
                 <div class="swiper-slide">
                     <div class="project-item">
                         <div class="portfolio-item mx-auto">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                                <div class="portfolio-item-caption-content text-center text-white">
+                                    <i class="fas fa-plus fa-3x"></i>
+                                </div>
                             </div>
                             <img class="img-fluid" src="{{ asset('img/portfolio/submarine.png')}}" alt="Challenge 3" />
                         </div>
@@ -229,12 +254,14 @@
                         </div>
                     </div>
                 </div>
-                <!-- Portfolio Item 4 -->
+                <!-- Challenge 4 -->
                 <div class="swiper-slide">
                     <div class="project-item">
                         <div class="portfolio-item mx-auto">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                                <div class="portfolio-item-caption-content text-center text-white">
+                                    <i class="fas fa-plus fa-3x"></i>
+                                </div>
                             </div>
                             <img class="img-fluid" src="{{ asset('img/portfolio/another.png')}}" alt="Challenge 4" />
                         </div>
@@ -246,12 +273,14 @@
                         </div>
                     </div>
                 </div>
-                <!-- Portfolio Item 5 -->
+                <!-- Challenge 5 -->
                 <div class="swiper-slide">
                     <div class="project-item">
                         <div class="portfolio-item mx-auto">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                                <div class="portfolio-item-caption-content text-center text-white"><i class="fas fa-plus fa-3x"></i></div>
+                                <div class="portfolio-item-caption-content text-center text-white">
+                                    <i class="fas fa-plus fa-3x"></i>
+                                </div>
                             </div>
                             <img class="img-fluid" src="{{ asset('img/portfolio/yet-another.png')}}" alt="Challenge 5" />
                         </div>
@@ -263,17 +292,36 @@
                         </div>
                     </div>
                 </div>
+                <!-- Challenge 6 -->
+                <div class="swiper-slide">
+                    <div class="project-item">
+                        <div class="portfolio-item mx-auto">
+                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="portfolio-item-caption-content text-center text-white">
+                                    <i class="fas fa-plus fa-3x"></i>
+                                </div>
+                            </div>
+                            <img class="img-fluid" src="{{ asset('img/portfolio/submarine.png')}}" alt="Challenge 6" />
+                        </div>
+                        <div class="project-title">
+                            <span>Challenge 6</span>
+                            <div class="icon-container">
+                                <i class="fa-brands fa-python"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <!-- Pagination -->
-{#            <div class="swiper-pagination"></div>#}
-            <!-- Navigation Buttons -->
+            <!-- Pagination supprimée -->
+            <!-- <div class="swiper-pagination"></div> -->
+            <!-- Boutons de navigation -->
             <div class="swiper-button-prev"></div>
             <div class="swiper-button-next"></div>
         </div>
     </div>
 </section>
 
-<!-- Initialize Swiper -->
+<!-- Initialisation de Swiper -->
 <script>
     document.addEventListener('DOMContentLoaded', function () {
         var swiper = new Swiper('.swiper', {
@@ -285,6 +333,7 @@
             centeredSlides: true, // Centre les slides
             slidesPerView: 3, // Nombre de slides visibles
             spaceBetween: 30, // Espace entre les slides
+            // Pagination retirée
             // pagination: {
             //     el: '.swiper-pagination',
             //     clickable: true,
@@ -294,7 +343,7 @@
                 prevEl: '.swiper-button-prev',
             },
             breakpoints: {
-                // Responsive breakpoints
+                // Points de rupture responsives
                 320: {
                     slidesPerView: 1,
                     spaceBetween: 10
