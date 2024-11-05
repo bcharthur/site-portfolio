@@ -13,11 +13,28 @@
         }
         .masthead-avatar-about {
             border-radius: 50%; /* Image arrondie */
-            width: 600px; /* Largeur fixe */
-            height: 600px; /* Hauteur fixe */
+            width: 100%; /* Largeur relative */
+            height: auto; /* Hauteur ajustée automatiquement */
+            max-width: 600px; /* Limite maximale de largeur */
+            aspect-ratio: 1 / 1; /* Assure un rapport largeur/hauteur de 1:1 pour garder la forme ronde */
             object-fit: cover; /* Ajuste l'image pour remplir le conteneur */
         }
+
+        /* Media query pour les écrans plus petits */
+        @media (max-width: 768px) {
+            .masthead-avatar-about {
+                max-width: 400px; /* Réduction de la taille sur les écrans moyens */
+            }
+        }
+
+        @media (max-width: 576px) {
+            .masthead-avatar-about {
+                max-width: 250px; /* Réduction de la taille sur les écrans petits */
+            }
+        }
     </style>
+
+
 </head>
 <body>
 
@@ -29,7 +46,7 @@
         <!-- Icon Divider -->
         <div class="divider-custom divider-light">
             <div class="divider-custom-line"></div>
-            <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+            <div class="divider-custom-icon"><i class="fa-solid fa-address-card"></i></div>
             <div class="divider-custom-line"></div>
         </div>
         <!-- About Section Content -->
