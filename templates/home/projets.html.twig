@@ -119,35 +119,36 @@
 </head>
 <body>
 
+
 <!-- Section Projets -->
 <section class="page-section portfolio text-custom mb-0 d-flex align-items-center" id="projets" style="min-height: 100vh;">
     <div class="container">
         <!-- Titre de la section -->
-        <h2 class="page-section-heading text-center text-secondary mb-0">Mes derniers projets</h2>
+        <h2 class="page-section-heading text-center text-secondary mb-5">Mes derniers projets</h2>
         <!-- Divider avec icône -->
-        <div class="divider-custom">
+        <div class="divider-custom mb-5">
             <div class="divider-custom-line"></div>
             <div class="divider-custom-icon"><i class="fa-solid fa-code"></i></div>
             <div class="divider-custom-line"></div>
         </div>
 
         <!-- Sous-titre Projet Full-Stack -->
-        <h1>Projet Full-Stack :</h1>
+        <h1 class="mb-4">Projet Full-Stack :</h1>
         <!-- Grille des projets Full-Stack -->
-        <div class="row justify-content-center">
+        <div class="row justify-content-center mb-5">
             <!-- Projet 1 -->
             <div class="col-md-6 col-lg-4 mb-5">
                 <div class="project-item">
-                    <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal1">
+                    <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModalFS1">
                         <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                             <div class="portfolio-item-caption-content text-center text-white">
                                 <i class="fas fa-plus fa-3x"></i>
                             </div>
                         </div>
-                        <img class="img-fluid" src="{{ asset('img/portfolio/cabin.png')}}" alt="ZouTube" />
+                        <img class="img-fluid project-img-custom" src="{{ asset('img/portfolio/cabin.png')}}" alt="ZouTube" />
                     </div>
-                    <div class="project-title">
-                        <span>ZouTube</span>
+                    <div class="project-title d-flex align-items-center">
+                        <span class="me-2">ZouTube</span>
                         <i class="fa-brands fa-symfony"></i>
                     </div>
                 </div>
@@ -155,16 +156,16 @@
             <!-- Projet 2 -->
             <div class="col-md-6 col-lg-4 mb-5">
                 <div class="project-item">
-                    <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal2">
+                    <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModalFS2">
                         <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                             <div class="portfolio-item-caption-content text-center text-white">
                                 <i class="fas fa-plus fa-3x"></i>
                             </div>
                         </div>
-                        <img class="img-fluid" src="{{ asset('img/portfolio/cake.png')}}" alt="Social Media" />
+                        <img class="img-fluid project-img-custom" src="{{ asset('img/portfolio/cake.png')}}" alt="Social Media" />
                     </div>
-                    <div class="project-title">
-                        <span>Social Media</span>
+                    <div class="project-title d-flex align-items-center">
+                        <span class="me-2">Social Media</span>
                         <img src="{{ asset('img/springboot.png') }}" alt="Spring Boot Logo" />
                     </div>
                 </div>
@@ -172,16 +173,16 @@
             <!-- Projet 3 -->
             <div class="col-md-6 col-lg-4 mb-5">
                 <div class="project-item">
-                    <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModal3">
+                    <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModalFS3">
                         <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                             <div class="portfolio-item-caption-content text-center text-white">
                                 <i class="fas fa-plus fa-3x"></i>
                             </div>
                         </div>
-                        <img class="img-fluid" src="{{ asset('img/portfolio/circus.png')}}" alt="IDE Python Online" />
+                        <img class="img-fluid project-img-custom" src="{{ asset('img/portfolio/circus.png')}}" alt="IDE Python Online" />
                     </div>
-                    <div class="project-title">
-                        <span>IDE Python Online</span>
+                    <div class="project-title d-flex align-items-center">
+                        <span class="me-2">IDE Python Online</span>
                         <div class="icon-container">
                             <i class="fa-brands fa-python"></i>
                             <i class="fa-brands fa-symfony"></i>
@@ -192,132 +193,269 @@
         </div>
 
         <!-- Sous-titre Projet & challenge cyber -->
-        <h1>Projet & challenge cyber :</h1>
+        <h1 class="mb-4">Défis de programmation cyber :</h1>
         <!-- Conteneur Swiper -->
-        <div class="swiper">
+        <div class="swiper mb-5">
             <div class="swiper-wrapper">
+
                 <!-- Challenge 1 -->
                 <div class="swiper-slide">
                     <div class="project-item">
-                        <div class="portfolio-item mx-auto">
+                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModalCC1">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                                 <div class="portfolio-item-caption-content text-center text-white">
                                     <i class="fas fa-plus fa-3x"></i>
                                 </div>
                             </div>
-                            <img class="img-fluid" src="{{ asset('img/portfolio/game.png')}}" alt="Challenge 1" />
+                            <img class="img-fluid project-img-custom" src="{{ asset('img/challenge/progprog.png')}}" alt="TCP - Retour au collège" />
                         </div>
-                        <div class="project-title">
-                            <img class="rootme-img" src="{{ asset('img/rootme.svg') }}" alt="Root Me Logo" />
-                            <span>Challenge 1</span>
-                            <div class="icon-container">
-                                <i class="fa-brands fa-python"></i>
-                            </div>
+                        <div class="project-title d-flex align-items-center">
+                            <img class="rootme-img me-2" src="{{ asset('img/rootme.svg') }}" alt="Root Me Logo" />
+                            <span>App - Script</span>
                         </div>
                     </div>
                 </div>
+
                 <!-- Challenge 2 -->
                 <div class="swiper-slide">
                     <div class="project-item">
-                        <div class="portfolio-item mx-auto">
+                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModalCC2">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                                 <div class="portfolio-item-caption-content text-center text-white">
                                     <i class="fas fa-plus fa-3x"></i>
                                 </div>
                             </div>
-                            <img class="img-fluid" src="{{ asset('img/portfolio/safe.png')}}" alt="Challenge 2" />
+                            <img class="img-fluid project-img-custom" src="{{ asset('img/challenge/progprog.png')}}" alt="TCP - Chaîne encodée" />
                         </div>
-                        <div class="project-title">
-                            <span>Challenge 2</span>
-                            <div class="icon-container">
-                                <i class="fa-brands fa-python"></i>
-                            </div>
+                        <div class="project-title d-flex align-items-center">
+                            <img class="rootme-img me-2" src="{{ asset('img/rootme.svg') }}" alt="Root Me Logo" />
+                            <span>App - Système</span>
                         </div>
                     </div>
                 </div>
+
                 <!-- Challenge 3 -->
                 <div class="swiper-slide">
                     <div class="project-item">
-                        <div class="portfolio-item mx-auto">
+                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModalCC3">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                                 <div class="portfolio-item-caption-content text-center text-white">
                                     <i class="fas fa-plus fa-3x"></i>
                                 </div>
                             </div>
-                            <img class="img-fluid" src="{{ asset('img/portfolio/submarine.png')}}" alt="Challenge 3" />
+                            <img class="img-fluid project-img-custom" src="{{ asset('img/challenge/progprog.png')}}" alt="TCP - La roue romaine" />
                         </div>
-                        <div class="project-title">
-                            <span>Challenge 3</span>
-                            <div class="icon-container">
-                                <i class="fa-brands fa-python"></i>
-                            </div>
+                        <div class="project-title d-flex align-items-center">
+                            <img class="rootme-img me-2" src="{{ asset('img/rootme.svg') }}" alt="Root Me Logo" />
+                            <span>Cracking</span>
                         </div>
                     </div>
                 </div>
+
                 <!-- Challenge 4 -->
                 <div class="swiper-slide">
                     <div class="project-item">
-                        <div class="portfolio-item mx-auto">
+                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModalCC4">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                                 <div class="portfolio-item-caption-content text-center text-white">
                                     <i class="fas fa-plus fa-3x"></i>
                                 </div>
                             </div>
-                            <img class="img-fluid" src="{{ asset('img/portfolio/another.png')}}" alt="Challenge 4" />
+                            <img class="img-fluid project-img-custom" src="{{ asset('img/challenge/progprog.png')}}" alt="TCP - Uncompress Me" />
                         </div>
-                        <div class="project-title">
-                            <span>Challenge 4</span>
-                            <div class="icon-container">
-                                <i class="fa-brands fa-python"></i>
-                            </div>
+                        <div class="project-title d-flex align-items-center">
+                            <img class="rootme-img me-2" src="{{ asset('img/rootme.svg') }}" alt="Root Me Logo" />
+                            <span>Cryptanalyse</span>
                         </div>
                     </div>
                 </div>
+
                 <!-- Challenge 5 -->
                 <div class="swiper-slide">
                     <div class="project-item">
-                        <div class="portfolio-item mx-auto">
+                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModalCC5">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                                 <div class="portfolio-item-caption-content text-center text-white">
                                     <i class="fas fa-plus fa-3x"></i>
                                 </div>
                             </div>
-                            <img class="img-fluid" src="{{ asset('img/portfolio/yet-another.png')}}" alt="Challenge 5" />
+                            <img class="img-fluid project-img-custom" src="{{ asset('img/challenge/progprog.png')}}" alt="CAPTCHA me if you can" />
                         </div>
-                        <div class="project-title">
-                            <span>Challenge 5</span>
-                            <div class="icon-container">
-                                <i class="fa-brands fa-python"></i>
-                            </div>
+                        <div class="project-title d-flex align-items-center">
+                            <img class="rootme-img me-2" src="{{ asset('img/rootme.svg') }}" alt="Root Me Logo" />
+                            <span>Forensic</span>
                         </div>
                     </div>
                 </div>
+
+                <!-- Challenge 5 -->
+                <div class="swiper-slide">
+                    <div class="project-item">
+                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModalCC6">
+                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="portfolio-item-caption-content text-center text-white">
+                                    <i class="fas fa-plus fa-3x"></i>
+                                </div>
+                            </div>
+                            <img class="img-fluid project-img-custom" src="{{ asset('img/challenge/progprog.png')}}" alt="ELF x64 - Shellcoding - Sheep warmup" />
+                        </div>
+                        <div class="project-title d-flex align-items-center">
+                            <img class="rootme-img me-2" src="{{ asset('img/rootme.svg') }}" alt="Root Me Logo" />
+                            <span>Programmation</span>
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Challenge 6 -->
                 <div class="swiper-slide">
                     <div class="project-item">
-                        <div class="portfolio-item mx-auto">
+                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModalCC6">
                             <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
                                 <div class="portfolio-item-caption-content text-center text-white">
                                     <i class="fas fa-plus fa-3x"></i>
                                 </div>
                             </div>
-                            <img class="img-fluid" src="{{ asset('img/portfolio/submarine.png')}}" alt="Challenge 6" />
+                            <img class="img-fluid project-img-custom" src="{{ asset('img/challenge/progprog.png')}}" alt="Solveur de polynômes du second degré" />
                         </div>
-                        <div class="project-title">
-                            <span>Challenge 6</span>
-                            <div class="icon-container">
-                                <i class="fa-brands fa-python"></i>
-                            </div>
+                        <div class="project-title d-flex align-items-center">
+                            <img class="rootme-img me-2" src="{{ asset('img/rootme.svg') }}" alt="Root Me Logo" />
+                            <span>Réaliste</span>
                         </div>
                     </div>
                 </div>
+
+                <!-- Challenge 7 -->
+                <div class="swiper-slide">
+                    <div class="project-item">
+                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModalCC7">
+                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="portfolio-item-caption-content text-center text-white">
+                                    <i class="fas fa-plus fa-3x"></i>
+                                </div>
+                            </div>
+                            <img class="img-fluid project-img-custom" src="{{ asset('img/challenge/progprog.png')}}" alt="Solveur de polynômes du second degré" />
+                        </div>
+                        <div class="project-title d-flex align-items-center">
+                            <img class="rootme-img me-2" src="{{ asset('img/rootme.svg') }}" alt="Root Me Logo" />
+                            <span>Réseau</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Challenge 8 -->
+                <div class="swiper-slide">
+                    <div class="project-item">
+                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModalCC7">
+                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                                <div class="portfolio-item-caption-content text-center text-white">
+                                    <i class="fas fa-plus fa-3x"></i>
+                                </div>
+                            </div>
+                            <img class="img-fluid project-img-custom" src="{{ asset('img/challenge/progprog.png')}}" alt="Solveur de polynômes du second degré" />
+                        </div>
+                        <div class="project-title d-flex align-items-center">
+                            <img class="rootme-img me-2" src="{{ asset('img/rootme.svg') }}" alt="Root Me Logo" />
+                            <span>Stéganographie</span>
+                        </div>
+                    </div>
+                </div>
+
             </div>
-            <!-- Pagination supprimée -->
-            <!-- <div class="swiper-pagination"></div> -->
             <!-- Boutons de navigation -->
             <div class="swiper-button-prev"></div>
             <div class="swiper-button-next"></div>
         </div>
+
+        <!-- Sous-titre Autres -->
+        <h1 class="mb-4">Autres :</h1>
+        <!-- Grille des autres projets -->
+        <div class="row justify-content-center mb-5">
+            <!-- Root Me -->
+            <div class="col-md-6 col-lg-3 mb-5"> <!-- Changé col-lg-4 en col-lg-3 -->
+                <div class="project-item">
+                    <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModalAP1">
+                        <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                            <div class="portfolio-item-caption-content text-center text-white">
+                                <i class="fas fa-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img class="img-fluid project-img-custom" src="{{ asset('img/portfolio/rootmecard.png')}}" alt="Root Me" />
+                    </div>
+                    <div class="project-title d-flex align-items-center">
+                        <span class="me-2">Root Me</span>
+                        <div class="icon-container">
+                            <a href="https://www.root-me.org/br0nson" target="_blank" rel="noopener noreferrer" class="text-white">
+                                <i class="fa-solid fa-link fa-lg"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- CyberLearning -->
+            <div class="col-md-6 col-lg-3 mb-5"> <!-- Changé col-lg-4 en col-lg-3 -->
+                <div class="project-item">
+                    <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModalAP2">
+                        <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                            <div class="portfolio-item-caption-content text-center text-white">
+                                <i class="fas fa-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img class="img-fluid project-img-custom" src="{{ asset('img/portfolio/cyberlearning.png')}}" alt="CyberLearning" />
+                    </div>
+                    <div class="project-title d-flex align-items-center">
+                        <span class="me-2">Cyber-Learning</span>
+                        <div class="icon-container">
+                            <a href="https://cyber-learning.fr/hacker-stats/?hackeur_id=1126" target="_blank" rel="noopener noreferrer" class="text-white">
+                                <i class="fa-solid fa-link fa-lg"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- TryHackMe -->
+            <div class="col-md-6 col-lg-3 mb-5"> <!-- Changé col-lg-4 en col-lg-3 -->
+                <div class="project-item">
+                    <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModalAP3">
+                        <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                            <div class="portfolio-item-caption-content text-center text-white">
+                                <i class="fas fa-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img class="img-fluid project-img-custom" src="{{ asset('img/portfolio/tryhackme.png')}}" alt="Try Hack Me" />
+                    </div>
+                    <div class="project-title d-flex align-items-center">
+                        <span class="me-2">Try Hack Me</span>
+                        <div class="icon-container">
+                            <a href="https://tryhackme.com/r/p/br0nson" target="_blank" rel="noopener noreferrer" class="text-white">
+                                <i class="fa-solid fa-link fa-lg"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- The Black Side -->
+            <div class="col-md-6 col-lg-3 mb-5"> <!-- Changé col-lg-4 en col-lg-3 -->
+                <div class="project-item">
+                    <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModalAP4">
+                        <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                            <div class="portfolio-item-caption-content text-center text-white">
+                                <i class="fas fa-plus fa-3x"></i>
+                            </div>
+                        </div>
+                        <img class="img-fluid project-img-custom" src="{{ asset('img/portfolio/theblackside.png')}}" alt="The Black Side" />
+                    </div>
+                    <div class="project-title d-flex align-items-center">
+                        <span class="me-2">The Black Side</span>
+                        <div class="icon-container">
+                            <a href="https://theblackside.fr/profil/br0nson" target="_blank" rel="noopener noreferrer" class="text-white">
+                                <i class="fa-solid fa-link fa-lg"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 </section>
 
