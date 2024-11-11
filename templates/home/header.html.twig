@@ -3,60 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <title>Effet de Saisie Dynamique</title>
-    <style>
-        .head {
-            padding-top: calc(6rem + 74px);
-            padding-bottom: 6rem;
-            min-height: 100vh; /* Pour occuper toute la hauteur de l'écran */
-            display: flex;
-            align-items: center; /* Centrer verticalement le contenu */
-            background-color: #fff; /* Couleur de fond de la section */
-        }
-        .card {
-            background-color: #0e243b; /* Couleur de la card */
-            border-radius: 20px;
-            padding: 40px;
-            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-            width: 100%;
-            max-width: 1200px; /* Largeur max de la card */
-            margin: auto; /* Centrer la card */
-        }
-        .head .head-heading {
-            font-size: 4.75rem;
-            line-height: 4.75rem;
-        }
-        .head .head-subheading {
-            font-size: 2.25rem;
-        }
-        .dynamic-line {
-            font-size: 2.25rem;
-            display: inline-block;
-        }
-        .typing-effect {
-            display: inline-block;
-            border-radius: 10px; /* Bords arrondis */
-            padding: 0.2rem 0.5rem; /* Espacement intérieur */
-            color: #082743; /* Couleur du texte */
-            font-weight: bold; /* Texte en gras */
-        }
-        .with-background {
-            background-color: #fff; /* Couleur de fond */
-        }
-        .image-container {
-            background-color: #2c3e50; /* Fond blanc sous l'image */
-            border: 5px solid #2c3e50; /* Bord blanc */
-            border-radius: 50%; /* Pour arrondir le contour */
-            padding: 10px; /* Espacement entre l'image et le bord */
-            display: inline-block;
-        }
-        .masthead-avatar {
-            border-radius: 50%; /* Pour rendre l'image elle-même circulaire */
-        }
-    </style>
+    <link href="{{ asset('css/header/styles.css') }}" rel="stylesheet" />
 </head>
 <body>
 
 <section class="masthead text-white text-center head" id="page-top">
+    <!-- Div Area en Arrière-Plan -->
+    <div class="area">
+        <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+
+    <!-- Contenu Principal -->
     <div class="card">
         <div class="container">
             <div class="row align-items-center">
@@ -107,52 +75,7 @@
     </div>
 </section>
 
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const words = ["Full-Stack", "Passionné", "CTF Player"];
-        let wordIndex = 0;
-        let charIndex = 0;
-        let isDeleting = false;
-        const typingSpeed = 180; // Vitesse de saisie
-        const deletingSpeed = 130; // Vitesse de suppression
-        const pauseBetweenWords = 800; // Pause avant de commencer le mot suivant
-        const dynamicTextElement = document.getElementById('dynamic-text');
-
-        function typeWords() {
-            const currentWord = words[wordIndex];
-
-            if (!isDeleting && charIndex === 0) {
-                dynamicTextElement.classList.add('with-background');
-                // Toujours afficher un espace insécable au début
-                dynamicTextElement.textContent = '\u00A0';
-            }
-
-            if (isDeleting) {
-                // Supprimer les caractères tout en gardant les espaces
-                dynamicTextElement.textContent = '\u00A0' + currentWord.substring(0, charIndex--) + '\u00A0';
-                if (charIndex < 0) { // Arrêter la suppression lorsque seul l'espace reste
-                    dynamicTextElement.textContent = '\u00A0';
-                    dynamicTextElement.classList.remove('with-background');
-                    isDeleting = false;
-                    wordIndex = (wordIndex + 1) % words.length;
-                    setTimeout(typeWords, 500);
-                } else {
-                    setTimeout(typeWords, deletingSpeed);
-                }
-            } else {
-                // Ajouter les caractères tout en gardant les espaces
-                dynamicTextElement.textContent = '\u00A0' + currentWord.substring(0, charIndex++) + '\u00A0';
-                if (charIndex > currentWord.length) {
-                    isDeleting = true;
-                    setTimeout(typeWords, pauseBetweenWords);
-                } else {
-                    setTimeout(typeWords, typingSpeed);
-                }
-            }
-        }
-
-        typeWords();
-    });
-</script>
+<!-- Scripts Existants -->
+<script src="{{ asset('js/header/scripts.js') }}"></script>
 </body>
 </html>

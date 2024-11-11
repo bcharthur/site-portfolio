@@ -1,6 +1,22 @@
-window.addEventListener('DOMContentLoaded', event => {
+// Fonction debounce optimisée
+function debounce(func, wait = 100, immediate = false) {
+    let timeout;
+    return function(...args) {
+        const context = this;
+        const later = () => {
+            timeout = null;
+            if (!immediate) func.apply(context, args);
+        };
+        const callNow = immediate && !timeout;
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+        if (callNow) func.apply(context, args);
+    };
+}
+
+window.addEventListener('DOMContentLoaded', () => {
     // Fonction pour rétrécir la navbar au défilement
-    var navbarShrink = function () {
+    const navbarShrink = () => {
         const navbarCollapsible = document.body.querySelector('#mainNav');
         if (!navbarCollapsible) {
             return;
@@ -15,8 +31,8 @@ window.addEventListener('DOMContentLoaded', event => {
     // Initialiser la navbar rétrécie
     navbarShrink();
 
-    // Rétrécir la navbar lors du défilement
-    document.addEventListener('scroll', navbarShrink);
+    // Appliquer le défilement fluide avec debounce pour optimiser les performances
+    window.addEventListener('scroll', debounce(navbarShrink, 100));
 
     // Fermer la navbar responsive lorsque un lien est cliqué
     const navbarToggler = document.body.querySelector('.navbar-toggler');
@@ -30,7 +46,7 @@ window.addEventListener('DOMContentLoaded', event => {
         });
     });
 
-    // Animation de défilement fluide pour les liens de navigation
+    // Animation de défilement fluide pour les liens de navigation (utilisation de scrollIntoView)
     const navLinks = document.querySelectorAll('#navbarResponsive .nav-link, .navbar-brand[href="#page-top"]');
 
     navLinks.forEach((link) => {
@@ -39,28 +55,7 @@ window.addEventListener('DOMContentLoaded', event => {
             const targetId = this.getAttribute('href');
             const targetElement = targetId === "#page-top" ? document.body : document.querySelector(targetId);
             if (targetElement) {
-                const startPosition = window.pageYOffset;
-                const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - 70; // Ajuster pour la hauteur de la navbar
-                const distance = targetPosition - startPosition;
-                const duration = 1000; // Durée de l'animation en ms
-                let startTime = null;
-
-                const ease = (t, b, c, d) => {
-                    t /= d / 2;
-                    if (t < 1) return c / 2 * t * t + b;
-                    t--;
-                    return -c / 2 * (t * (t - 2) - 1) + b;
-                };
-
-                const animation = (currentTime) => {
-                    if (!startTime) startTime = currentTime;
-                    const timeElapsed = currentTime - startTime;
-                    const run = ease(timeElapsed, startPosition, distance, duration);
-                    window.scrollTo(0, run);
-                    if (timeElapsed < duration) requestAnimationFrame(animation);
-                };
-
-                requestAnimationFrame(animation);
+                targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }
 
             // Si le lien cliqué est "AB" (navbar-brand), retirer la classe 'active' de tous les liens de navigation
@@ -121,6 +116,6 @@ window.addEventListener('DOMContentLoaded', event => {
     // Appeler la fonction au chargement de la page
     handleActiveLink();
 
-    // Ajouter un écouteur pour l'événement scroll
-    window.addEventListener('scroll', handleActiveLink);
+    // Ajouter un écouteur pour l'événement scroll avec debounce
+    window.addEventListener('scroll', debounce(handleActiveLink, 100));
 });
