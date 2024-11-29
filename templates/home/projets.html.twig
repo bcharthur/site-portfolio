@@ -2,111 +2,7 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Mes Projets</title>
-    <style>
-        /* Réinitialisation des styles de base */
-        * {
-            box-sizing: border-box;
-        }
 
-        body, html {
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden; /* Empêche le défilement horizontal */
-        }
-
-        body {
-            background-color: #fff;
-            font-family: Arial, sans-serif;
-        }
-
-        /* Styles pour les éléments de projet */
-        .project-item {
-            border: 1px solid #ccc;
-            border-radius: 15px;
-            overflow: hidden;
-            padding: 10px;
-            background-color: #2c3e50;
-            margin-bottom: 20px;
-            width: 100%; /* S'assure que l'élément remplit la slide */
-        }
-
-        .project-title {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px;
-            background-color: #2c3e50;
-            border-top: 1px solid #ccc;
-            border-bottom-left-radius: 15px;
-            border-bottom-right-radius: 15px;
-            font-size: 1.5rem; /* Augmente la taille des titres */
-            color: #fff; /* Couleur du texte */
-        }
-
-        .icon-container {
-            display: flex;
-            gap: 5px; /* Espacement entre les icônes */
-        }
-
-        .project-title i, .project-title img {
-            font-size: 1.8rem; /* Taille des icônes */
-            color: #fff; /* Couleur des icônes */
-            height: 25px; /* Hauteur de l'image */
-            width: 25px; /* Largeur de l'image */
-        }
-
-        .project-title img {
-            filter: brightness(0) invert(1); /* Transforme le noir en blanc */
-        }
-
-        .project-title .rootme-img {
-            width: 50px; /* Taille de l'image Root Me */
-            height: auto; /* Conserve le ratio d'aspect */
-            margin-right: 10px; /* Espacement à droite */
-        }
-
-        /* Styles pour Swiper */
-        .swiper {
-            width: 100%;
-            max-width: 1200px; /* Largeur maximale */
-            margin: 0 auto; /* Centre horizontalement */
-            padding: 20px 0;
-            overflow: hidden; /* Empêche le débordement */
-        }
-
-        .swiper-slide {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            /* Swiper gère la largeur des slides */
-        }
-
-        .swiper-slide .project-item {
-            max-width: 300px; /* Largeur maximale des cartes */
-            width: 100%;
-            margin: 0 auto; /* Centre la carte dans la slide */
-        }
-
-        /* Styles pour les boutons de navigation */
-        .swiper-button-prev,
-        .swiper-button-next {
-            color: #2c3e50; /* Couleur des flèches de navigation */
-        }
-
-        /* Ajustements responsives */
-        @media (max-width: 1024px) {
-            .swiper-slide .project-item {
-                max-width: 250px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .swiper-slide .project-item {
-                max-width: 200px;
-            }
-        }
-    </style>
 
     <!-- Swiper CSS -->
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
@@ -116,15 +12,34 @@
 
     <!-- Swiper JS -->
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <link href="{{ asset('css/projets/styles.css') }}" rel="stylesheet" />
 </head>
 <body>
 
 
 <!-- Section Projets -->
 <section class="page-section portfolio text-custom mb-0 d-flex align-items-center" id="projets" style="min-height: 100vh;">
+
+    <!-- Div Area en Arrière-Plan -->
+    <div class="area">
+        <ul class="circles">
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+            <li></li>
+        </ul>
+    </div>
+
     <div class="container">
         <!-- Titre de la section -->
-        <h2 class="page-section-heading text-center text-secondary mb-5">Mes derniers projets</h2>
+        <h2 class="page-section-heading text-center text-white text-uppercase mb-5">Mes derniers projets</h2>
         <!-- Divider avec icône -->
         <div class="divider-custom mb-5">
             <div class="divider-custom-line"></div>
@@ -514,6 +429,9 @@
         });
     });
 </script>
+
+<script src="{{ asset('js/header/typewords.js') }}"></script>
+
 
 </body>
 </html>
