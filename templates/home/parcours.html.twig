@@ -4,18 +4,20 @@
     <meta charset="UTF-8">
     <title>Stepper Personnalisé</title>
     <!-- Inclusion de Bootstrap CSS -->
+    <!-- Assurez-vous d'inclure Bootstrap CSS dans votre projet -->
 </head>
 <style>
+    /* Styles personnalisés */
     .horizontal-timeline .items {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
         border-top: 3px solid #e9ecef;
     }
 
     .horizontal-timeline .items .items-list {
-        display: block;
         position: relative;
         text-align: center;
         padding-top: 70px;
-        margin-right: 0;
     }
 
     .horizontal-timeline .items .items-list:before {
@@ -24,31 +26,69 @@
         height: 36px;
         border-right: 2px dashed #dee2e6;
         top: 0;
+        left: 50%;
+        transform: translateX(-50%);
     }
 
     .horizontal-timeline .items .items-list .event-date {
         position: absolute;
         top: 36px;
-        left: 0;
-        right: 0;
+        left: 50%;
+        transform: translateX(-50%);
         width: 75px;
-        margin: 0 auto;
         font-size: 0.9rem;
         padding-top: 8px;
     }
 
-    @media (min-width: 1140px) {
-        .horizontal-timeline .items .items-list {
-            display: inline-block;
-            width: 24%;
-            padding-top: 45px;
+    /* Media Queries pour la réactivité */
+    @media (max-width: 991px) {
+        .horizontal-timeline .items {
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-areas:
+                    "item1 item2"
+                    "item3 item4";
         }
-
-        .horizontal-timeline .items .items-list .event-date {
-            top: -40px;
+        .horizontal-timeline .items .items-list:nth-child(1) {
+            grid-area: item1;
+        }
+        .horizontal-timeline .items .items-list:nth-child(2) {
+            grid-area: item2;
+        }
+        .horizontal-timeline .items .items-list:nth-child(3) {
+            grid-area: item3;
+        }
+        .horizontal-timeline .items .items-list:nth-child(4) {
+            grid-area: item4;
         }
     }
 
+    @media (max-width: 767px) {
+        .horizontal-timeline .items {
+            grid-template-columns: 1fr;
+            grid-template-areas:
+                    "item1"
+                    "item2"
+                    "item3"
+                    "item4";
+        }
+        .horizontal-timeline .items .items-list {
+            padding-top: 50px;
+        }
+
+        /* Suppression des traits en pointillés sur mobile */
+        .horizontal-timeline .items .items-list:before {
+            display: none;
+        }
+
+        /* Ajout d'espace entre la date et l'intitulé du diplôme */
+        .horizontal-timeline .items .items-list .event-date {
+            margin-bottom: 10px;
+        }
+
+        .horizontal-timeline .items .items-list h5 {
+            margin-top: 10px;
+        }
+    }
 </style>
 <body>
 <!-- Section Parcours -->
@@ -56,14 +96,14 @@
     <div class="container-fluid py-5">
 
         <!-- Titre de la section -->
-        <h2 class="page-section-heading text-center text-white mb-5">Mon parcours</h2>
+        <h2 class="page-section-heading text-center text-white text-uppercase mb-5">Mon parcours</h2>
         <!-- Divider avec icône -->
-        <div class="divider-custom mb-5">
-            <div class="divider-custom-line" style="color: white"></div>
-            <div class="divider-custom-icon" style="color: white"><i class="fa-solid fa-graduation-cap"></i></div>
-            <div class="divider-custom-line" style="color: white"></div>
+        <div class="divider-custom divider-light">
+            <div class="divider-custom-line"></div>
+            <div class="divider-custom-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+            <div class="divider-custom-line"></div>
         </div>
-
+        <br><br><br>
         <div class="row">
             <div class="col-lg-12">
 
@@ -72,45 +112,49 @@
                     <ul class="list-inline items">
                         <li class="list-inline-item items-list">
                             <div class="px-4">
-                                <div class="event-date badge bg-info">2 June</div>
-                                <h5 class="pt-2">Event One</h5>
-                                <p class="text-muted">It will be as simple as occidental in fact it will be Occidental Cambridge
-                                    friend</p>
-                                <div>
-                                    <a href="#" data-mdb-ripple-init class="btn btn-primary btn-sm">Read more</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-inline-item items-list">
-                            <div class="px-4">
-                                <div class="event-date badge bg-success">5 June</div>
-                                <h5 class="pt-2">Event Two</h5>
-                                <p class="text-muted">Everyone realizes why a new common language one could refuse translators.
+                                <div class="event-date badge bg-custom" style="color: white">2027</div>
+                                <h5 class="pt-2">Expert en Sécurité Digitale</h5>
+                                <p class="text-muted">
+                                    Bac +5
                                 </p>
                                 <div>
-                                    <a href="#" data-mdb-ripple-init class="btn btn-primary btn-sm">Read more</a>
+                                    <a href="https://www.francecompetences.fr/recherche/rncp/36399/" target="_blank" class="btn btn-primary btn-sm">Voir plus</a>
                                 </div>
                             </div>
                         </li>
                         <li class="list-inline-item items-list">
                             <div class="px-4">
-                                <div class="event-date badge bg-danger">7 June</div>
-                                <h5 class="pt-2">Event Three</h5>
-                                <p class="text-muted">If several languages coalesce the grammar of the resulting simple and
-                                    regular</p>
-                                <div>
-                                    <a href="#" data-mdb-ripple-init class="btn btn-primary btn-sm">Read more</a>
-                                </div>
-                            </div>
-                        </li>
-                        <li class="list-inline-item items-list">
-                            <div class="px-4">
-                                <div class="event-date badge bg-warning">8 June</div>
-                                <h5 class="pt-2">Event Four</h5>
-                                <p class="text-muted">Languages only differ in their pronunciation and their most common words.
+                                <div class="event-date badge bg-white" style="color: #0e243b">2025</div>
+                                <h5 class="pt-2">Concepteur Développeur d'Applications</h5>
+                                <p class="text-muted">
+                                    Bac +4
                                 </p>
                                 <div>
-                                    <a href="#" data-mdb-ripple-init class="btn btn-primary btn-sm">Read more</a>
+                                    <a href="https://www.francecompetences.fr/recherche/rncp/37873/" target="_blank" class="btn btn-primary btn-sm">Voir plus</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-inline-item items-list">
+                            <div class="px-4">
+                                <div class="event-date badge bg-white" style="color: #0e243b">2023</div>
+                                <h5 class="pt-2">BTS Systèmes Numériques Informatique et Réseaux</h5>
+                                <p class="text-muted">
+                                    Bac +2
+                                </p>
+                                <div>
+                                    <a href="https://www.francecompetences.fr/recherche/rncp/37391/" target="_blank" class="btn btn-primary btn-sm">Voir plus</a>
+                                </div>
+                            </div>
+                        </li>
+                        <li class="list-inline-item items-list">
+                            <div class="px-4">
+                                <div class="event-date badge bg-white" style="color:#0e243b;">2021</div>
+                                <h5 class="pt-2">BAC STI2D option SIN</h5>
+                                <p class="text-muted">
+                                    Baccalauréat Technologique
+                                </p>
+                                <div>
+                                    <a href="lien_vers_details_diplome" class="btn btn-primary btn-sm">Voir plus</a>
                                 </div>
                             </div>
                         </li>
@@ -125,6 +169,6 @@
 </section>
 
 <!-- Inclusion de Bootstrap JS (optionnel) -->
-
+<!-- Assurez-vous d'inclure Bootstrap JS et jQuery si nécessaire -->
 </body>
 </html>

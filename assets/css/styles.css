@@ -107,6 +107,15 @@ body {
   background-color: var(--bs-body-bg);
   -webkit-text-size-adjust: 100%;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+  overflow: auto !important;
+  -ms-overflow-style: none !important;  /* Pour IE et Edge */
+  scrollbar-width: none !important;  /* Pour Firefox */
+}
+
+body::-webkit-scrollbar {
+  width: 0px;
+  background: transparent; /* Optionnel */
 }
 
 hr {
@@ -5337,7 +5346,14 @@ textarea.form-control-lg {
   overflow: hidden;
 }
 .modal-dialog-scrollable .modal-body {
-  overflow-y: auto;
+  overflow-y: auto !important;
+  -ms-overflow-style: none !important;  /* Pour IE et Edge */
+  scrollbar-width: none !important;  /* Pour Firefox */
+}
+
+.modal-dialog-scrollable .modal-body::-webkit-scrollbar {
+  width: 0px;
+  background: transparent;
 }
 
 .modal-dialog-centered {

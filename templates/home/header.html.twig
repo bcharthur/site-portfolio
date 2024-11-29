@@ -28,38 +28,24 @@
         <div class="container">
             <div class="row align-items-center">
                 <!-- Colonne pour le texte statique à gauche -->
-                <div class="col-md-6 text-md-start text-center">
-                    <h3 class="head-subheading mb-3" style="color: #ffffff;">Salut, c'est moi !</h3>
-                    <h2 class="head-heading mb-3" style="color: #ffffff;">Arthur Bouchaud</h2>
+                <div class="col-md-6 order-2 order-md-1 text-md-start text-center">
+                    <h3 class="head-subheading mb-3">Salut, c'est moi !</h3>
+                    <h2 class="head-heading mb-3">Arthur Bouchaud</h2>
                     <!-- Séparation de la ligne dynamique -->
-                    <div class="dynamic-line mb-3 display-1" style="color: #ffffff;">et je suis
+                    <div class="dynamic-line mb-3">et je suis
                         <span id="dynamic-text" class="typing-effect"></span>
                     </div>
                 </div>
 
                 <!-- Colonne pour l'image à droite -->
-                <div class="col-md-6 text-center mb-4 mb-md-0" style="
-    background-color: #2c3e50;
-    border: 5px solid #2c3e50;
-    border-radius: 50%;
-    padding: 10px;
-    display: inline-block;
-">
-                    <img
-                            src="{{ asset('img/bouchaud.png') }}"
-                            alt="Avatar image"
-                            class="img-fluid"
-                            style="
-            border-radius: 50%;
-            width: 100%;
-            height: auto;
-            max-width: 600px;
-            aspect-ratio: 1 / 1;
-            object-fit: cover;
-            /*transform: rotate(15deg) translateX(10px);*/
-            transition: transform 0.3s ease;
-        "
-                    />
+                <div class="col-md-6 order-1 order-md-2 text-center mb-4 mb-md-0">
+                    <div class="image-container">
+                        <img
+                                src="{{ asset('img/bouchaud.png') }}"
+                                alt="Avatar image"
+                                class="img-fluid"
+                        />
+                    </div>
                 </div>
 
             </div>
@@ -73,27 +59,72 @@
             <div class="d-flex justify-content-center mt-4">
                 <div class="row g-2" style="width: 300px;">
                     <div class="col">
-                        <button class="btn btn-outline-light w-100"><i class="fa-solid fa-download"></i> CV</button>
+                        <a href="{{ asset('files/cv/CV_Arthur_Bouchaud.pdf') }}" class="btn btn-outline-light w-100" download>
+                            <i class="fa-solid fa-download"></i> CV
+                        </a>
+
                     </div>
                     <div class="col">
-                        <button class="btn btn-custom w-100">Contactez-moi !</button>
+                        <a class="btn btn-custom w-100" href="#contact">Contactez-moi</a>
                     </div>
                 </div>
             </div>
             <!-- Boutons des réseaux sociaux sur une même ligne -->
             <div class="d-flex justify-content-center mt-4">
                 <div class="d-flex gap-2">
-                    <button class="btn btn-custom"><i class="fa-brands fa-linkedin fa-2x"></i></button>
-                    <button class="btn btn-custom"><i class="fa-brands fa-github fa-2x"></i></button>
-                    <button class="btn btn-custom"><i class="fa-brands fa-whatsapp fa-2x"></i></button>
-                    <button class="btn btn-custom"><i class="fa-brands fa-facebook fa-2x"></i></button>
+                    <a class="btn btn-custom" href="https://www.linkedin.com/in/arthur-bouchaud-a74981238/" target="_blank"><i class="fa-brands fa-linkedin fa-2x"></i></a>
+                    <a class="btn btn-custom" href="https://github.com/bcharthur" target="_blank"><i class="fa-brands fa-github fa-2x"></i></a>
+                    <!-- Bouton Téléphone avec déclenchement du modal -->
+                    <button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#phoneModal">
+                        <i class="fa-solid fa-phone fa-2x"></i>
+                    </button>
+                    <!-- Bouton Enveloppe avec déclenchement du modal -->
+                    <button type="button" class="btn btn-custom" data-bs-toggle="modal" data-bs-target="#emailModal">
+                        <i class="fa-solid fa-envelope fa-2x"></i>
+                    </button>
                 </div>
             </div>
+
         </div>
     </div>
 </section>
 
+
+<!-- Modal Téléphone -->
+<div class="modal fade" id="phoneModal" tabindex="-1" aria-labelledby="phoneModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="phoneModalLabel">Contact Téléphone (06.18.71.98.72)</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+            <div class="modal-body text-center">
+                <button id="sendMessageButton" class="btn btn-custom m-2">Envoyer un message</button>
+                <button id="callButton" class="btn btn-custom m-2">Appeler</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Enveloppe -->
+<div class="modal fade" id="emailModal" tabindex="-1" aria-labelledby="emailModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="emailModalLabel">Contact Email (art.bouchaud@gmail.com)</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+            </div>
+            <div class="modal-body text-center">
+                <button id="sendEmailButton" class="btn btn-custom m-2">Envoyer un email</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- Scripts Existants -->
+
 <script src="{{ asset('js/header/typewords.js') }}"></script>
+<script src="{{ asset('js/header/contact.js') }}"></script>
+
 </body>
 </html>
