@@ -3,6 +3,168 @@
 <head>
     <meta charset="UTF-8">
     <link href="{{ asset('css/header/styles.css') }}" rel="stylesheet" />
+
+    <style>
+        /* Styles pour la div 'actus' */
+        .actus {
+            color: #0e243b;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .contact-group {
+            flex-wrap: nowrap;
+        }
+
+        .contact-group h5 {
+            white-space: nowrap;
+        }
+
+        /* Styles pour la div 'actus' */
+        .actus {
+            color: #0e243b;
+            background-color: white;
+            border-radius: 10px;
+            padding: 20px;
+            max-width: 800px; /* Limite la largeur maximale */
+            width: 100%; /* Prend toute la largeur possible */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-group {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .buttons-group {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+        }
+
+        .buttons-group .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 0.5rem;
+        }
+
+        .buttons-group .btn:last-child {
+            margin-right: 0;
+        }
+
+        /* Ajustement des tailles de police et espacements pour la div 'actus' */
+        .actus h1 {
+            font-size: 1.8rem;
+        }
+
+        .actus h5 {
+            font-size: 1.2rem;
+        }
+
+        .actus .btn {
+            font-size: 1rem;
+            padding: 0.5rem 0.75rem;
+        }
+
+        .actus i {
+            font-size: 1.8rem;
+        }
+
+        /* Media queries pour petits écrans */
+        @media (max-width: 576px) {
+            .actus {
+                width: 95%; /* Augmente la largeur sur mobile */
+            }
+            .contact-group {
+                flex-direction: column;
+                align-items: center;
+            }
+            .buttons-group {
+                flex-direction: row;
+                justify-content: center;
+            }
+            .contact-group h5 {
+                margin-bottom: 0.5rem;
+            }
+            .buttons-group .btn {
+                margin-right: 0.5rem;
+            }
+            .buttons-group .btn:last-child {
+                margin-right: 0;
+            }
+            .actus h1 {
+                font-size: 1.6rem;
+            }
+            .actus h5 {
+                font-size: 1.1rem;
+            }
+            .actus .btn {
+                font-size: 1rem;
+                padding: 0.5rem 0.75rem;
+            }
+            .actus i {
+                font-size: 1.8rem;
+            }
+        }
+
+        /* Ajustements pour écrans moyens */
+        @media (min-width: 576px) and (max-width: 768px) {
+            .actus h1 {
+                font-size: 1.8rem;
+            }
+            .actus h5 {
+                font-size: 1.2rem;
+            }
+            .actus .btn {
+                font-size: 1.1rem;
+                padding: 0.5rem 0.75rem;
+            }
+            .actus i {
+                font-size: 2rem;
+            }
+        }
+
+        /* Media queries pour écrans larges */
+        @media (min-width: 768px) {
+            .actus h1 {
+                font-size: 2rem;
+            }
+            .actus h5 {
+                font-size: 1.3rem;
+            }
+            .actus .btn {
+                font-size: 1.2rem;
+                padding: 0.6rem 1rem;
+            }
+            .actus i {
+                font-size: 2.2rem;
+            }
+        }
+
+        /* Media queries pour écrans extra-larges */
+        @media (min-width: 992px) {
+            .actus h1 {
+                font-size: 2.2rem;
+            }
+            .actus h5 {
+                font-size: 1.4rem;
+            }
+            .actus .btn {
+                font-size: 1.3rem;
+                padding: 0.7rem 1.2rem;
+            }
+            .actus i {
+                font-size: 2.4rem;
+            }
+        }
+
+
+
+    </style>
 </head>
 <body>
 
@@ -26,24 +188,29 @@
     <!-- Contenu Principal -->
     <div class="card">
         <div class="container">
-            <div style="color: #0e243b; background-color: white; border-radius: 10px; padding: 10px;">
+            <!-- Ajout de 'mx-auto' pour centrer la div 'actus' -->
+            <div class="actus position-relative mx-auto">
+                <!-- Bouton de fermeture -->
+                <button type="button" class="btn-close position-absolute top-0 end-0 m-2" aria-label="Fermer"></button>
                 <h1>En recherche d'alternance : Expert en Sécurité Digitale</h1>
                 <h5>(de Septembre 2025 à 2027)</h5>
-                <!-- Boutons des réseaux sociaux sur une même ligne -->
+                <!-- Section modifiée pour le "Contactez-moi" -->
                 <div class="d-flex justify-content-center mt-4">
-                    <div class="d-flex gap-2 align-items-center">
-                        <h5>Contactez moi :</h5>
-                        <a class="btn btn-outline-custom" href="https://www.linkedin.com/in/arthur-bouchaud-a74981238/" target="_blank">
-                            <i class="fa-brands fa-linkedin fa-2x"></i>
-                        </a>
-                        <!-- Bouton Téléphone avec déclenchement du modal -->
-                        <button type="button" class="btn btn-outline-custom" data-bs-toggle="modal" data-bs-target="#phoneModal">
-                            <i class="fa-solid fa-phone fa-2x"></i>
-                        </button>
-                        <!-- Bouton Enveloppe avec déclenchement du modal -->
-                        <button type="button" class="btn btn-outline-custom" data-bs-toggle="modal" data-bs-target="#emailModal">
-                            <i class="fa-solid fa-envelope fa-2x"></i>
-                        </button>
+                    <div class="contact-group text-center">
+                        <h5 class="mb-2">Contactez-moi :</h5>
+                        <div class="d-flex justify-content-center align-items-center buttons-group">
+                            <a class="btn btn-outline-custom me-1" href="https://www.linkedin.com/in/arthur-bouchaud-a74981238/" target="_blank" aria-label="LinkedIn">
+                                <i class="fa-brands fa-linkedin"></i>
+                            </a>
+                            <!-- Bouton Téléphone avec déclenchement du modal -->
+                            <button type="button" class="btn btn-outline-custom me-1" data-bs-toggle="modal" data-bs-target="#phoneModal" aria-label="Téléphone">
+                                <i class="fa-solid fa-phone"></i>
+                            </button>
+                            <!-- Bouton Enveloppe avec déclenchement du modal -->
+                            <button type="button" class="btn btn-outline-custom" data-bs-toggle="modal" data-bs-target="#emailModal" aria-label="Email">
+                                <i class="fa-solid fa-envelope"></i>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -85,7 +252,6 @@
                         <a href="{{ asset('files/cv/CV_Arthur_Bouchaud.pdf') }}" class="btn btn-outline-light w-100" download>
                             <i class="fa-solid fa-download"></i> CV
                         </a>
-
                     </div>
                     <div class="col">
                         <a class="btn btn-custom w-100" href="#contact">Contactez-moi</a>
@@ -148,6 +314,17 @@
 
 <script src="{{ asset('js/header/typewords.js') }}"></script>
 <script src="{{ asset('js/header/contact.js') }}"></script>
+
+<!-- Script pour la suppression de la div 'actus' -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var closeButton = document.querySelector('.actus .btn-close');
+        closeButton.addEventListener('click', function() {
+            var actus = this.closest('.actus');
+            actus.parentNode.removeChild(actus);
+        });
+    });
+</script>
 
 </body>
 </html>
