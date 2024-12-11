@@ -39,7 +39,7 @@
 
     <div class="container">
         <!-- Titre de la section -->
-        <h2 class="page-section-heading text-center text-white text-uppercase mb-5">Mes derniers projets</h2>
+        <h2 class="page-section-heading text-center text-white text-uppercase mb-5">Quelques-uns de mes projets</h2>
         <!-- Divider avec icône -->
         <div class="divider-custom divider-light">
             <div class="divider-custom-line"></div>
@@ -48,7 +48,7 @@
         </div>
 
         <!-- Sous-titre Projet Full-Stack -->
-        <h1 class="mb-4">Projet Full-Stack (visitable dans mon lab) :</h1>
+        <h1 class="mb-4">Projet développement :</h1>
         <!-- Grille des projets Full-Stack -->
         <div class="row justify-content-center mb-5">
             <!-- Projet 1 -->
@@ -60,17 +60,23 @@
                                 <i class="fas fa-plus fa-3x"></i>
                             </div>
                         </div>
-                        <img class="img-fluid project-img-custom" src="{{ asset('img/portfolio/ytb-downloader-2.png')}}" alt="YouTube Downloader" />
+                        <!-- Remplacement de l'image par un div stylisé -->
+                        <div class="project-img-custom d-flex align-items-center justify-content-center bg-primary text-white" style="height: 200px; width: 100%;">
+                            <span><i class="fa-solid fa-globe"></i> API Web Download</span>
+                        </div>
                     </div>
                     <div class="project-title d-flex align-items-center">
-                        <span class="me-2">YouTube Downloader</span>
+                        <span class="me-2">API Web Download</span>
                         <div class="icon-container">
-                            <i class="fa-brands fa-symfony"></i>
-                            <i class="fa-brands fa-python"></i>
+                            {# <i class="fa-brands fa-symfony" style="font-size: 1.5rem;"></i> #}
+                            <i class="fa-brands fa-python" style="font-size: 1.5rem;"></i>
+                            <img src="{{ asset('img/flask.svg') }}" alt="Flask Logo" style="width: 1.5rem; height: auto;" />
                         </div>
+
                     </div>
                 </div>
             </div>
+
             <!-- Projet 2 -->
             <div class="col-md-6 col-lg-4 mb-5">
                 <div class="project-item">
@@ -80,14 +86,23 @@
                                 <i class="fas fa-plus fa-3x"></i>
                             </div>
                         </div>
-                        <img class="img-fluid project-img-custom" src="{{ asset('img/portfolio/cake.png')}}" alt="Social Media" />
+                        <!-- Remplacement de l'image par un div stylisé -->
+                        <div class="project-img-custom d-flex align-items-center justify-content-center bg-primary text-white" style="height: 200px; width: 100%;">
+                            <span><i class="fa-regular fa-thumbs-up"></i> Social Media</span>
+                        </div>
                     </div>
                     <div class="project-title d-flex align-items-center">
                         <span class="me-2">Social Media</span>
-                        <img src="{{ asset('img/springboot.png') }}" alt="Spring Boot Logo" />
+                        <div class="icon-container">
+                            {# <i class="fa-brands fa-symfony" style="font-size: 1.5rem;"></i> #}
+                            <i class="fa-brands fa-java"></i>
+                            <img src="{{ asset('img/springboot.png') }}" alt="Spring Boot Logo" />
+                        </div>
+
                     </div>
                 </div>
             </div>
+
             <!-- Projet 3 -->
             <div class="col-md-6 col-lg-4 mb-5">
                 <div class="project-item">
@@ -97,18 +112,23 @@
                                 <i class="fas fa-plus fa-3x"></i>
                             </div>
                         </div>
-                        <img class="img-fluid project-img-custom" src="{{ asset('img/portfolio/circus.png')}}" alt="IDE Python Online" />
+                        <!-- Remplacement de l'image par un div stylisé -->
+                        <div class="project-img-custom d-flex align-items-center justify-content-center bg-primary text-white" style="height: 200px; width: 100%;">
+                            <span><i class="fa-solid fa-leaf"></i> Green IT projet</span>
+                        </div>
                     </div>
                     <div class="project-title d-flex align-items-center">
-                        <span class="me-2">IDE Python Online</span>
+                        <span class="me-2">Green IT projet</span>
                         <div class="icon-container">
                             <i class="fa-brands fa-python"></i>
+                            <img src="{{ asset('img/flask.svg') }}" alt="Flask Logo" />
                             <i class="fa-brands fa-symfony"></i>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+
 
         <!-- Sous-titre Projet & challenge cyber -->
         <h1 class="mb-4">Défis de programmation cyber :</h1>
@@ -285,7 +305,7 @@
         </div>
 
         <!-- Sous-titre Autres -->
-        <h1 class="mb-4">Autres :</h1>
+        <h1 class="mb-4">Mes plateformes cybers préférées :</h1>
         <!-- Grille des autres projets -->
         <div class="row justify-content-center mb-5">
             <!-- Root Me -->
