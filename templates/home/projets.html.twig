@@ -3,17 +3,101 @@
 <head>
     <meta charset="UTF-8">
 
-
-    <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.3.0/css/all.css" crossorigin="anonymous">
 
-    <!-- Swiper JS -->
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <!-- Slick CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
 
     <link href="{{ asset('css/projets/styles.css') }}" rel="stylesheet" />
+
+    <style>
+        /* Ajustements spécifiques à la section "Mes scripts pour résoudre des challenges cyber :" */
+        .challenge-slider .project-item {
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            height: 300px;
+            overflow: hidden;
+            padding: 10px;
+            box-sizing: border-box;
+            margin: 10px;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .challenge-slider .project-item:hover {
+            transform: scale(1);
+        }
+
+        .challenge-slider .project-title {
+            text-align: center;
+            width: 100%;
+            margin-top: 0;
+        }
+
+        /* Augmentation de la taille des titres */
+        .challenge-slider .project-title span {
+            display: inline-block;
+            max-width: 100%;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-size: 1.2rem; /* Taille augmentée */
+        }
+
+        .challenge-slider .project-img-custom {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            text-align: center;
+            padding-top: 10px;
+        }
+
+        .challenge-slider img.project-img-custom {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+        }
+
+        /* Espacement supplémentaire entre les slides */
+        .challenge-slider .slick-slide {
+            padding: 0 20px;
+        }
+
+        /* Agrandir et écarter un peu plus les flèches */
+        .slick-prev:before, .slick-next:before {
+            font-family: "Font Awesome 5 Free";
+            font-weight: 900;
+            font-size: 2rem;
+        }
+
+        .slick-prev:before {
+            content: "\f104";
+        }
+
+        .slick-next:before {
+            content: "\f105";
+        }
+
+        .slick-prev, .slick-next {
+            width: 50px;
+            height: 50px;
+        }
+
+        /* Écarter davantage les flèches de chaque côté */
+        .slick-prev {
+            left: -70px;
+        }
+        .slick-next {
+            right: -70px;
+        }
+    </style>
 </head>
 <body>
 
@@ -24,7 +108,6 @@
     <!-- Div Area en Arrière-Plan -->
     <div class="area">
         <ul class="circles">
-            <li></li>
             <li></li>
             <li></li>
             <li></li>
@@ -49,7 +132,6 @@
 
         <!-- Sous-titre Projet Full-Stack -->
         <h1 class="mb-4">Projet développement :</h1>
-        <!-- Grille des projets Full-Stack -->
         <div class="row justify-content-center mb-5">
             <!-- Projet 1 -->
             <div class="col-md-6 col-lg-4 mb-5">
@@ -60,7 +142,6 @@
                                 <i class="fas fa-plus fa-3x"></i>
                             </div>
                         </div>
-                        <!-- Remplacement de l'image par un div stylisé -->
                         <div class="project-img-custom d-flex align-items-center justify-content-center bg-primary text-white" style="height: 200px; width: 100%;">
                             <span><i class="fa-solid fa-globe"></i> API Web Download</span>
                         </div>
@@ -68,11 +149,9 @@
                     <div class="project-title d-flex align-items-center">
                         <span class="me-2">API Web Download</span>
                         <div class="icon-container">
-                            {# <i class="fa-brands fa-symfony" style="font-size: 1.5rem;"></i> #}
                             <i class="fa-brands fa-python" style="font-size: 1.5rem;"></i>
                             <img src="{{ asset('img/flask.svg') }}" alt="Flask Logo" style="width: 1.5rem; height: auto;" />
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -86,7 +165,6 @@
                                 <i class="fas fa-plus fa-3x"></i>
                             </div>
                         </div>
-                        <!-- Remplacement de l'image par un div stylisé -->
                         <div class="project-img-custom d-flex align-items-center justify-content-center bg-primary text-white" style="height: 200px; width: 100%;">
                             <span><i class="fa-regular fa-thumbs-up"></i> Social Media</span>
                         </div>
@@ -94,11 +172,9 @@
                     <div class="project-title d-flex align-items-center">
                         <span class="me-2">Social Media</span>
                         <div class="icon-container">
-                            {# <i class="fa-brands fa-symfony" style="font-size: 1.5rem;"></i> #}
                             <i class="fa-brands fa-java"></i>
                             <img src="{{ asset('img/springboot.png') }}" alt="Spring Boot Logo" />
                         </div>
-
                     </div>
                 </div>
             </div>
@@ -112,7 +188,6 @@
                                 <i class="fas fa-plus fa-3x"></i>
                             </div>
                         </div>
-                        <!-- Remplacement de l'image par un div stylisé -->
                         <div class="project-img-custom d-flex align-items-center justify-content-center bg-primary text-white" style="height: 200px; width: 100%;">
                             <span><i class="fa-solid fa-leaf"></i> Green IT projet</span>
                         </div>
@@ -129,179 +204,69 @@
             </div>
         </div>
 
-
         <!-- Sous-titre Projet & challenge cyber -->
-        <h1 class="mb-4">Défis de programmation cyber :</h1>
-        <!-- Conteneur Swiper -->
-        <div class="swiper mb-5">
-            <div class="swiper-wrapper">
-
-                <!-- Challenge 1 -->
-                <div class="swiper-slide">
-                    <div class="project-item">
-                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModalCC1">
-                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                                <div class="portfolio-item-caption-content text-center text-white">
-                                    <i class="fas fa-plus fa-3x"></i>
-                                </div>
-                            </div>
-                            <img class="img-fluid project-img-custom" src="{{ asset('img/challenge/progprog.png')}}" alt="TCP - Retour au collège" />
-                        </div>
-                        <div class="project-title d-flex align-items-center">
-                            <img class="rootme-img me-2" src="{{ asset('img/rootme.svg') }}" alt="Root Me Logo" />
-                            <span>App - Script</span>
+        <h1 class="mb-4">Mes scripts pour résoudre des challenges cyber :</h1>
+        <!-- Conteneur Slick -->
+        <div class="challenge-slider mb-5">
+            <!-- Challenge 1 -->
+            <div class="project-item">
+                <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModalCC1">
+                    <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                        <div class="portfolio-item-caption-content text-center text-white">
+                            <i class="fas fa-plus fa-3x"></i>
                         </div>
                     </div>
+                    <img class="img-fluid project-img-custom" src="{{ asset('img/challenge/progprog.png')}}" alt="Cryptanalyse" />
                 </div>
-
-                <!-- Challenge 2 -->
-                <div class="swiper-slide">
-                    <div class="project-item">
-                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModalCC2">
-                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                                <div class="portfolio-item-caption-content text-center text-white">
-                                    <i class="fas fa-plus fa-3x"></i>
-                                </div>
-                            </div>
-                            <img class="img-fluid project-img-custom" src="{{ asset('img/challenge/progprog.png')}}" alt="TCP - Chaîne encodée" />
-                        </div>
-                        <div class="project-title d-flex align-items-center">
-                            <img class="rootme-img me-2" src="{{ asset('img/rootme.svg') }}" alt="Root Me Logo" />
-                            <span>App - Système</span>
-                        </div>
-                    </div>
+                <div class="project-title">
+                    <span>Cryptanalyse</span>
                 </div>
-
-                <!-- Challenge 3 -->
-                <div class="swiper-slide">
-                    <div class="project-item">
-                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModalCC3">
-                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                                <div class="portfolio-item-caption-content text-center text-white">
-                                    <i class="fas fa-plus fa-3x"></i>
-                                </div>
-                            </div>
-                            <img class="img-fluid project-img-custom" src="{{ asset('img/challenge/progprog.png')}}" alt="TCP - La roue romaine" />
-                        </div>
-                        <div class="project-title d-flex align-items-center">
-                            <img class="rootme-img me-2" src="{{ asset('img/rootme.svg') }}" alt="Root Me Logo" />
-                            <span>Cracking</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Challenge 4 -->
-                <div class="swiper-slide">
-                    <div class="project-item">
-                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModalCC4">
-                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                                <div class="portfolio-item-caption-content text-center text-white">
-                                    <i class="fas fa-plus fa-3x"></i>
-                                </div>
-                            </div>
-                            <img class="img-fluid project-img-custom" src="{{ asset('img/challenge/progprog.png')}}" alt="TCP - Uncompress Me" />
-                        </div>
-                        <div class="project-title d-flex align-items-center">
-                            <img class="rootme-img me-2" src="{{ asset('img/rootme.svg') }}" alt="Root Me Logo" />
-                            <span>Cryptanalyse</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Challenge 5 -->
-                <div class="swiper-slide">
-                    <div class="project-item">
-                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModalCC5">
-                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                                <div class="portfolio-item-caption-content text-center text-white">
-                                    <i class="fas fa-plus fa-3x"></i>
-                                </div>
-                            </div>
-                            <img class="img-fluid project-img-custom" src="{{ asset('img/challenge/progprog.png')}}" alt="CAPTCHA me if you can" />
-                        </div>
-                        <div class="project-title d-flex align-items-center">
-                            <img class="rootme-img me-2" src="{{ asset('img/rootme.svg') }}" alt="Root Me Logo" />
-                            <span>Forensic</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Challenge 5 -->
-                <div class="swiper-slide">
-                    <div class="project-item">
-                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModalCC6">
-                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                                <div class="portfolio-item-caption-content text-center text-white">
-                                    <i class="fas fa-plus fa-3x"></i>
-                                </div>
-                            </div>
-                            <img class="img-fluid project-img-custom" src="{{ asset('img/challenge/progprog.png')}}" alt="ELF x64 - Shellcoding - Sheep warmup" />
-                        </div>
-                        <div class="project-title d-flex align-items-center">
-                            <img class="rootme-img me-2" src="{{ asset('img/rootme.svg') }}" alt="Root Me Logo" />
-                            <span>Programmation</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Challenge 6 -->
-                <div class="swiper-slide">
-                    <div class="project-item">
-                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModalCC6">
-                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                                <div class="portfolio-item-caption-content text-center text-white">
-                                    <i class="fas fa-plus fa-3x"></i>
-                                </div>
-                            </div>
-                            <img class="img-fluid project-img-custom" src="{{ asset('img/challenge/progprog.png')}}" alt="Solveur de polynômes du second degré" />
-                        </div>
-                        <div class="project-title d-flex align-items-center">
-                            <img class="rootme-img me-2" src="{{ asset('img/rootme.svg') }}" alt="Root Me Logo" />
-                            <span>Réaliste</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Challenge 7 -->
-                <div class="swiper-slide">
-                    <div class="project-item">
-                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModalCC7">
-                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                                <div class="portfolio-item-caption-content text-center text-white">
-                                    <i class="fas fa-plus fa-3x"></i>
-                                </div>
-                            </div>
-                            <img class="img-fluid project-img-custom" src="{{ asset('img/challenge/progprog.png')}}" alt="Solveur de polynômes du second degré" />
-                        </div>
-                        <div class="project-title d-flex align-items-center">
-                            <img class="rootme-img me-2" src="{{ asset('img/rootme.svg') }}" alt="Root Me Logo" />
-                            <span>Réseau</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Challenge 8 -->
-                <div class="swiper-slide">
-                    <div class="project-item">
-                        <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModalCC7">
-                            <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
-                                <div class="portfolio-item-caption-content text-center text-white">
-                                    <i class="fas fa-plus fa-3x"></i>
-                                </div>
-                            </div>
-                            <img class="img-fluid project-img-custom" src="{{ asset('img/challenge/progprog.png')}}" alt="Solveur de polynômes du second degré" />
-                        </div>
-                        <div class="project-title d-flex align-items-center">
-                            <img class="rootme-img me-2" src="{{ asset('img/rootme.svg') }}" alt="Root Me Logo" />
-                            <span>Stéganographie</span>
-                        </div>
-                    </div>
-                </div>
-
             </div>
-            <!-- Boutons de navigation -->
-            <div class="swiper-button-prev"></div>
-            <div class="swiper-button-next"></div>
+
+            <!-- Challenge 2 -->
+            <div class="project-item">
+                <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModalCC2">
+                    <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                        <div class="portfolio-item-caption-content text-center text-white">
+                            <i class="fas fa-plus fa-3x"></i>
+                        </div>
+                    </div>
+                    <img class="img-fluid project-img-custom" src="{{ asset('img/challenge/progprog.png')}}" alt="Programmation" />
+                </div>
+                <div class="project-title">
+                    <span>Programmation</span>
+                </div>
+            </div>
+
+            <!-- Challenge 3 -->
+            <div class="project-item">
+                <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModalCC3">
+                    <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                        <div class="portfolio-item-caption-content text-center text-white">
+                            <i class="fas fa-plus fa-3x"></i>
+                        </div>
+                    </div>
+                    <img class="img-fluid project-img-custom" src="{{ asset('img/challenge/progprog.png')}}" alt="Réseau" />
+                </div>
+                <div class="project-title">
+                    <span>Réseau</span>
+                </div>
+            </div>
+
+            <!-- Challenge 4 -->
+            <div class="project-item">
+                <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModalCC4">
+                    <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
+                        <div class="portfolio-item-caption-content text-center text-white">
+                            <i class="fas fa-plus fa-3x"></i>
+                        </div>
+                    </div>
+                    <img class="img-fluid project-img-custom" src="{{ asset('img/challenge/progprog.png')}}" alt="Codage et numération" />
+                </div>
+                <div class="project-title">
+                    <span>Codage et numération</span>
+                </div>
+            </div>
         </div>
 
         <!-- Sous-titre Autres -->
@@ -309,7 +274,7 @@
         <!-- Grille des autres projets -->
         <div class="row justify-content-center mb-5">
             <!-- Root Me -->
-            <div class="col-md-6 col-lg-3 mb-5"> <!-- Changé col-lg-4 en col-lg-3 -->
+            <div class="col-md-6 col-lg-3 mb-5">
                 <div class="project-item">
                     <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModalAP1">
                         <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
@@ -329,8 +294,9 @@
                     </div>
                 </div>
             </div>
+
             <!-- CyberLearning -->
-            <div class="col-md-6 col-lg-3 mb-5"> <!-- Changé col-lg-4 en col-lg-3 -->
+            <div class="col-md-6 col-lg-3 mb-5">
                 <div class="project-item">
                     <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModalAP2">
                         <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
@@ -350,8 +316,9 @@
                     </div>
                 </div>
             </div>
+
             <!-- TryHackMe -->
-            <div class="col-md-6 col-lg-3 mb-5"> <!-- Changé col-lg-4 en col-lg-3 -->
+            <div class="col-md-6 col-lg-3 mb-5">
                 <div class="project-item">
                     <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModalAP3">
                         <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
@@ -371,8 +338,9 @@
                     </div>
                 </div>
             </div>
+
             <!-- The Black Side -->
-            <div class="col-md-6 col-lg-3 mb-5"> <!-- Changé col-lg-4 en col-lg-3 -->
+            <div class="col-md-6 col-lg-3 mb-5">
                 <div class="project-item">
                     <div class="portfolio-item mx-auto" data-bs-toggle="modal" data-bs-target="#portfolioModalAP4">
                         <div class="portfolio-item-caption d-flex align-items-center justify-content-center h-100 w-100">
@@ -397,61 +365,57 @@
     </div>
 </section>
 
-<!-- Initialisation de Swiper -->
-<script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var swiper = new Swiper('.swiper', {
-            loop: true,
-            autoplay: {
-                delay: 3000, // Délai entre chaque slide en ms
-                disableOnInteraction: false,
-            },
-            centeredSlides: true, // Centre les slides
-            slidesPerView: 3, // Nombre de slides visibles
-            spaceBetween: 30, // Espace entre les slides
-            // Pagination retirée
-            // pagination: {
-            //     el: '.swiper-pagination',
-            //     clickable: true,
-            // },
-            navigation: {
-                nextEl: '.swiper-button-next',
-                prevEl: '.swiper-button-prev',
-            },
-            breakpoints: {
-                // Points de rupture responsives
-                320: {
-                    slidesPerView: 1,
-                    spaceBetween: 10
-                },
-                640: {
-                    slidesPerView: 2,
-                    spaceBetween: 20
-                },
-                1024: {
-                    slidesPerView: 3,
-                    spaceBetween: 30
-                },
-                1440: {
-                    slidesPerView: 4,
-                    spaceBetween: 40
-                }
-            }
-        });
+<!-- jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
 
-        // Optionnel : Pause l'autoplay lorsque la souris survole le carrousel
-        var swiperContainer = document.querySelector('.swiper');
-        swiperContainer.addEventListener('mouseenter', () => {
-            swiper.autoplay.stop();
-        });
-        swiperContainer.addEventListener('mouseleave', () => {
-            swiper.autoplay.start();
+<!-- Slick JS -->
+<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+
+<!-- Initialisation de Slick -->
+<script>
+    $(document).ready(function(){
+        $('.challenge-slider').slick({
+            infinite: true,
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            arrows: true,
+            centerMode: true,
+            centerPadding: '80px',
+            responsive: [
+                {
+                    breakpoint: 1024,
+                    settings: {
+                        slidesToShow: 3,
+                        centerPadding: '40px'
+                    }
+                },
+                {
+                    breakpoint: 640,
+                    settings: {
+                        slidesToShow: 2,
+                        centerPadding: '20px'
+                    }
+                },
+                {
+                    breakpoint: 480,
+                    settings: {
+                        slidesToShow: 1,
+                        centerPadding: '20px'
+                    }
+                },
+                {
+                    breakpoint: 320,
+                    settings: {
+                        slidesToShow: 1,
+                        centerPadding: '10px'
+                    }
+                }
+            ]
         });
     });
 </script>
 
 <script src="{{ asset('js/header/typewords.js') }}"></script>
-
 
 </body>
 </html>

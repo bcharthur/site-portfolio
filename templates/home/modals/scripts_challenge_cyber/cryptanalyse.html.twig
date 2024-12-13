@@ -1,0 +1,485 @@
+<!-- Portfolio Modal CC1 (Cryptanalyse) -->
+<div class="portfolio-modal modal fade" id="portfolioModalCC1" tabindex="-1" aria-labelledby="portfolioModalCC1Label" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center pb-5">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-10">
+                            <!-- Titre -->
+                            <h2 class="portfolio-modal-title text-secondary text-uppercase mb-4">Cryptanalyse</h2>
+                            <!-- Icon Divider-->
+                            <div class="divider-custom mb-4">
+                                <div class="divider-custom-line"></div>
+                                <div class="divider-custom-icon"><i class="fa-brands fa-python"></i></div>
+                                <div class="divider-custom-line"></div>
+                            </div>
+
+                            <!-- Introduction -->
+                            <p class="mb-4">
+                                Dans la partie Cryptanalyse, j'ai travaillé sur plusieurs challenges liés au déchiffrement, au décryptage ou à la récupération d'informations cachées dans des données chiffrées ou obscurcies.
+                                Ci-dessous figurent plusieurs exemples de codes : un pseudo random number generator (PRNG) pour retrouver la clé, un déchiffrage audio type DTMF (Call me Baby), un challenge de pixellisation, ou encore l'utilisation d'un carré de Polybe sans clé.
+                            </p>
+
+                            <!-- Accordéon des programmes Cryptanalyse -->
+                            <div class="accordion mb-4" id="cryptanalyseProgramsAccordion">
+
+                                <!-- Programme 1: Pseudo Random Number Generator -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingCryptoOne">
+                                        <button class="accordion-button collapsed text-uppercase" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCryptoOne" aria-expanded="false" aria-controls="collapseCryptoOne">
+
+                                            <span>1. Pseudo Random Number Generator <img src="{{ asset('img/rootme.svg') }}" alt="CyberLearning Logo" style="width: 1.5rem; height: auto;" /></span>
+                                        </button>
+                                    </h2>
+                                    <div id="collapseCryptoOne" class="accordion-collapse collapse" aria-labelledby="headingCryptoOne" data-bs-parent="#cryptanalyseProgramsAccordion">
+                                        <div class="accordion-body text-start">
+                                            <strong>Énoncé :</strong> Trouver la clé de chiffrement générée par un PRNG basé sur un timestamp, afin de déchiffrer un fichier compressé.
+                                            <br><br>
+                                            <strong>Explication :</strong> Le script itère sur une plage de timestamps (décembre 2012), génère la clé, tente de déchiffrer et de décompresser le fichier, puis s'arrête une fois que les données correctes sont trouvées.
+                                            <br>
+                                            <!-- Bouton pour afficher le code -->
+                                            <button class="btn btn-sm btn-outline-dark mt-3" type="button" data-bs-toggle="collapse" data-bs-target="#codePRNG" aria-expanded="false" aria-controls="codePRNG">
+                                                Afficher le code
+                                            </button>
+
+                                            <div class="collapse mt-3" id="codePRNG">
+                                                <pre><code class="language-python">
+// Code PRNG (Pseudo Random Number Generator) decrypt
+# Mettre le fichier se terminant par ".bz2" dans le même répertoire que le projet et faire : python.exe .\main.py .\xxxxxxxxxxxxx.bz2.crypt
+
+
+import time
+import datetime
+import sys
+import bz2  # Importer le module bz2 pour la décompression
+
+# Définir le charset utilisé pour générer la clé
+CHARSET = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789"
+KEY_SIZE = 32
+
+
+class PRNG:
+    def __init__(self, seed):
+        self.holdrand = seed
+
+    def rand(self):
+        self.holdrand = (self.holdrand * 214013 + 2531011) & 0xFFFFFFFF  # Assurer 32 bits
+        return (self.holdrand >> 16) & 0x7FFF
+
+
+def generate_key(prng):
+    key = []
+    for _ in range(KEY_SIZE):
+        rand_val = prng.rand()
+        key.append(CHARSET[rand_val % len(CHARSET)])
+    return ''.join(key)
+
+
+def decrypt(buffer, key):
+    decrypted = bytearray(buffer)
+    key_bytes = key.encode('utf-8')
+    key_len = len(key_bytes)
+    for i in range(len(decrypted)):
+        decrypted[i] ^= key_bytes[i % key_len]
+    return decrypted
+
+
+def decompress_bz2(decrypted_data, decrypted_filename):
+    try:
+        # Décompresser les données déchiffrées
+        decompressed_data = bz2.decompress(decrypted_data)
+
+        # Définir le nom du fichier décompressé avec extension .txt
+        if decrypted_filename.endswith('.bz2.decrypted.bz2'):
+            decompressed_filename = decrypted_filename.replace('.bz2.decrypted.bz2', '.decrypted.txt')
+        elif decrypted_filename.endswith('.decrypted.bz2'):
+            decompressed_filename = decrypted_filename.replace('.decrypted.bz2', '.txt')
+        else:
+            decompressed_filename = decrypted_filename + '.txt'
+
+        # Écrire les données décompressées dans le fichier de sortie
+        with open(decompressed_filename, 'wb') as f:
+            f.write(decompressed_data)
+
+        print(f"[+] Fichier décompressé sauvegardé sous : {decompressed_filename}")
+    except (OSError, EOFError) as e:
+        print(f"[-] Erreur lors de la décompression : {e}")
+
+
+def main():
+    # Vérifier les arguments
+    if len(sys.argv) != 2:
+        print(f"Usage: {sys.argv[0]} (fichier_crypté)")
+        sys.exit(1)
+
+    encrypted_file = sys.argv[1]
+
+    # Lire le fichier chiffré
+    try:
+        with open(encrypted_file, 'rb') as f:
+            encrypted_data = f.read()
+    except IOError as e:
+        print(f"Erreur lors de la lecture du fichier : {e}")
+        sys.exit(1)
+
+    # Définir la plage de dates pour décembre 2012
+    start_date = datetime.datetime(2012, 12, 1, 0, 0, 0)
+    end_date = datetime.datetime(2012, 12, 31, 23, 59, 59)
+    start_timestamp = int(time.mktime(start_date.timetuple()))
+    end_timestamp = int(time.mktime(end_date.timetuple()))
+
+    print(f"Recherche de la graine entre {start_date} ({start_timestamp}) et {end_date} ({end_timestamp})...")
+
+    found = False
+    for seed in range(start_timestamp, end_timestamp + 1):
+        prng = PRNG(seed)
+        key = generate_key(prng)
+        decrypted_data = decrypt(encrypted_data, key)
+
+        # Vérifier si les premiers bytes correspondent à une archive BZ2
+        if decrypted_data.startswith(b'BZh'):
+            print(f"[+] Graine trouvée : {seed} ({datetime.datetime.fromtimestamp(seed)})")
+            print(f"[+] Clé utilisée : {key}")
+
+            # Sauvegarder le fichier déchiffré
+            decrypted_filename = encrypted_file.replace('.crypt', '.decrypted.bz2')
+            with open(decrypted_filename, 'wb') as f:
+                f.write(decrypted_data)
+            print(f"[+] Fichier déchiffré sauvegardé sous : {decrypted_filename}")
+
+            # Décompresser le fichier déchiffré et sauvegarder en .txt
+            decompress_bz2(decrypted_data, decrypted_filename)
+
+            found = True
+            break
+
+        # Optionnel : afficher la progression
+        if (seed - start_timestamp) % 100000 == 0:
+            print(f"Vérification de la graine {seed}...")
+
+    if not found:
+        print("[-] Graine non trouvée dans la plage spécifiée.")
+
+
+if __name__ == "__main__":
+    main()
+                                                </code></pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Programme 2: Call me Baby (DTMF) -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingCryptoTwo">
+                                        <button class="accordion-button collapsed text-uppercase" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCryptoTwo" aria-expanded="false" aria-controls="collapseCryptoTwo">
+
+                                            <span>2. Call me Baby (DTMF) <img src="{{ asset('img/cl.png') }}" alt="CyberLearning Logo" style="width: 1.5rem; height: auto; filter: invert(100%);" /></span>
+                                        </button>
+                                    </h2>
+                                    <div id="collapseCryptoTwo" class="accordion-collapse collapse" aria-labelledby="headingCryptoTwo" data-bs-parent="#cryptanalyseProgramsAccordion">
+                                        <div class="accordion-body text-start">
+                                            <strong>Énoncé :</strong> Décoder un message caché dans des tonalités téléphoniques DTMF issues d'un fichier audio.
+                                            <br><br>
+                                            <strong>Explication :</strong> Le script analyse des segments audio, identifie les touches DTMF, puis mappe ces touches à des lettres selon un clavier téléphonique, reconstituant le message.
+                                            <br>
+                                            <!-- Bouton pour afficher le code -->
+                                            <button class="btn btn-sm btn-outline-dark mt-3" type="button" data-bs-toggle="collapse" data-bs-target="#codeDTMF" aria-expanded="false" aria-controls="codeDTMF">
+                                                Afficher le code
+                                            </button>
+
+                                            <div class="collapse mt-3" id="codeDTMF">
+                                                <pre><code class="language-python">
+// Code Call me Baby (DTMF):
+import numpy as np
+from scipy.fftpack import fft
+from pydub import AudioSegment
+
+# Liste des fréquences DTMF pour chaque touche
+dtmf_freqs = {
+    '1': (697, 1209),
+    '2': (697, 1336),
+    '3': (697, 1477),
+    '4': (770, 1209),
+    '5': (770, 1336),
+    '6': (770, 1477),
+    '7': (852, 1209),
+    '8': (852, 1336),
+    '9': (852, 1477),
+    '0': (941, 1336),
+    '*': (941, 1209),
+    '#': (941, 1477)
+}
+
+# Mapping des touches vers les lettres
+keypad_mapping = {
+    '2': ['A', 'B', 'C'],
+    '3': ['D', 'E', 'F'],
+    '4': ['G', 'H', 'I'],
+    '5': ['J', 'K', 'L'],
+    '6': ['M', 'N', 'O'],
+    '7': ['P', 'Q', 'R', 'S'],
+    '8': ['T', 'U', 'V'],
+    '9': ['W', 'X', 'Y', 'Z'],
+    '0': [' '],  # 0 est souvent utilisé pour un espace
+    '1': ['1'],  # Optionnel selon le contexte, peut-être symboles
+    '*': ['*'],  # Peut-être utilisé pour des fonctions spéciales
+    '#': ['#']
+}
+
+# Fonction pour trouver les deux fréquences dominantes dans un segment de signal audio
+def find_two_dominant_freqs(signal, rate):
+    signal_fft = fft(signal)
+    freqs = np.fft.fftfreq(len(signal), 1 / rate)
+
+    signal_fft = np.abs(signal_fft[:len(signal) // 2])
+    freqs = freqs[:len(signal) // 2]
+
+    dominant_indices = np.argsort(signal_fft)[-2:]  # On prend les 2 plus grandes valeurs
+    dominant_freqs = freqs[dominant_indices]
+
+    return sorted(dominant_freqs)
+
+# Charger le fichier audio avec pydub (pour les fichiers .au)
+audio = AudioSegment.from_file('CallMeBaby.wav', format='wav')
+
+rate = audio.frame_rate
+data = np.array(audio.get_array_of_samples())
+
+# Si le fichier est stéréo, on ne garde qu'un seul canal
+if audio.channels == 2:
+    data = data[::2]
+
+# Diviser le fichier audio en segments correspondant à chaque tonalité
+window_size = int(rate * 0.2)  # Par exemple, analyser par fenêtres de 0.2 seconde
+dtmf_sequence = []
+
+for i in range(0, len(data), window_size):
+    segment = data[i:i + window_size]
+    if len(segment) == 0:
+        continue
+    dominant_freqs = find_two_dominant_freqs(segment, rate)
+
+    # Identifier la touche DTMF correspondant aux deux fréquences dominantes
+    for key, (low_freq, high_freq) in dtmf_freqs.items():
+        if abs(dominant_freqs[0] - low_freq) < 20 and abs(dominant_freqs[1] - high_freq) < 20:
+            dtmf_sequence.append(key)
+            break
+
+# Décoder la séquence de touches en lettres
+decoded_message = []
+current_char_sequence = []
+previous_key = None
+threshold_time = 0.5  # Seuil pour considérer qu'une touche est répétée rapidement (en secondes)
+
+for i, key in enumerate(dtmf_sequence):
+    if previous_key == key:
+        current_char_sequence.append(key)
+    else:
+        if previous_key:
+            # Traiter la séquence de touches précédente
+            key_count = len(current_char_sequence)
+            if previous_key in keypad_mapping:
+                letters = keypad_mapping[previous_key]
+                decoded_message.append(letters[(key_count - 1) % len(letters)])
+        # Réinitialiser pour la nouvelle touche
+        current_char_sequence = [key]
+    previous_key = key
+
+# Traiter la dernière séquence
+if previous_key:
+    key_count = len(current_char_sequence)
+    if previous_key in keypad_mapping:
+        letters = keypad_mapping[previous_key]
+        decoded_message.append(letters[(key_count - 1) % len(letters)])
+
+# Afficher le message décodé
+print("Message décodé : ", ''.join(decoded_message))
+                                                </code></pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Programme 3: Pixellisation -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingCryptoThree">
+                                        <button class="accordion-button collapsed text-uppercase" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCryptoThree" aria-expanded="false" aria-controls="collapseCryptoThree">
+
+
+                                            <span>3. Pixellisation <img src="{{ asset('img/cl.png') }}" alt="CyberLearning Logo" style="width: 1.5rem; height: auto; filter: invert(100%);" /></span>
+                                        </button>
+                                    </h2>
+                                    <div id="collapseCryptoThree" class="accordion-collapse collapse" aria-labelledby="headingCryptoThree" data-bs-parent="#cryptanalyseProgramsAccordion">
+                                        <div class="accordion-body text-start">
+                                            <strong>Énoncé :</strong> Décoder un message pixélisé via un format RLE (Run Length Encoding), puis le reconstituer en image.
+                                            <br><br>
+                                            <strong>Explication :</strong> Le script décode chaque ligne RLE en bits, puis génère une image en noir et blanc qui révèle le message caché.
+                                            <br>
+                                            <!-- Bouton pour afficher le code -->
+                                            <button class="btn btn-sm btn-outline-dark mt-3" type="button" data-bs-toggle="collapse" data-bs-target="#codePixellisation" aria-expanded="false" aria-controls="codePixellisation">
+                                                Afficher le code
+                                            </button>
+
+                                            <div class="collapse mt-3" id="codePixellisation">
+                                                <pre><code class="language-python">
+// Code Pixellisation :
+from PIL import Image
+import re
+
+# Données RLE fournies par l'énigme
+pixellisation_data = """
++0x1+1x5+0x6+1x3+0x7+1x4+0x6+1x1+0x2+1x1+0x6+1x3
++0x3+1x1+0x9+1x1+0x8+1x1+0x9+1x1+0x2+1x1+0x6+1x1+0x2+1x1
++0x3+1x1+0x9+1x1+0x8+1x4+0x6+1x4+0x6+1x1+0x3+1x1
++0x3+1x1+0x9+1x1+0x11+1x1+0x6+1x1+0x2+1x1+0x6+1x1+0x3+1x1
++0x3+1x1+0x9+1x1+0x11+1x1+0x6+1x1+0x2+1x1+0x6+1x1+0x2+1x1
++0x3+1x1+0x8+1x3+0x7+1x4+0x6+1x1+0x2+1x1+0x6+1x3
+"""
+
+
+def decode_rle(line):
+    """
+    Décode une ligne RLE en une chaîne binaire.
+    Chaque segment 'NxM' est converti en 'N' répété 'M' fois.
+    """
+    # Utiliser une expression régulière pour extraire tous les couples (N, M)
+    pattern = re.compile(r'([01])x(\d+)')
+    matches = pattern.findall(line)
+    bits = ''
+    for bit, count in matches:
+        bits += bit * int(count)
+    return bits
+
+
+# Processus de décodage
+def process_pixellisation(data):
+    """
+    Décode les données RLE et génère une image.
+    """
+    # Séparer les lignes de données
+    lines = data.strip().split('\n')
+    decoded_lines = []
+
+    # Décoder chaque ligne et collecter les bits
+    for idx, line in enumerate(lines, start=1):
+        bits = decode_rle(line)
+        decoded_lines.append(bits)
+        print(f"Line {idx}: {bits} (length: {len(bits)})")  # Debugging
+
+    # Déterminer les dimensions de l'image
+    width = max(len(line) for line in decoded_lines)
+    height = len(decoded_lines)
+    print(f"Image dimensions: {width}x{height}")
+
+    # Remplir les lignes avec des '0' (blanc) pour égaliser les longueurs
+    padded_lines = [line.ljust(width, '0') for line in decoded_lines]
+
+    # Convertir les bits en pixels (0 = blanc, 1 = noir)
+    pixels = []
+    for line in padded_lines:
+        for bit in line:
+            if bit == '0':
+                pixels.append((255, 255, 255))  # Blanc
+            elif bit == '1':
+                pixels.append((0, 0, 0))  # Noir
+            else:
+                # Si un bit inattendu est rencontré, utiliser une couleur rouge pour l'indiquer
+                pixels.append((255, 0, 0))
+
+    # Créer l'image
+    image_out = Image.new("RGB", (width, height), "white")
+    image_out.putdata(pixels)
+    image_out.save('Solve.png')
+    image_out.show()
+    print("Image générée et sauvegardée sous 'Solve.png'.")
+
+
+# Exécuter le processus
+process_pixellisation(pixellisation_data)
+                                                </code></pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Programme 4: Un Polybe sans clé -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingCryptoFour">
+                                        <button class="accordion-button collapsed text-uppercase" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCryptoFour" aria-expanded="false" aria-controls="collapseCryptoFour">
+                                            <span>4. Un Polybe sans clé <img src="{{ asset('img/cl.png') }}" alt="CyberLearning Logo" style="width: 1.5rem; height: auto; filter: invert(100%);" /></span>
+                                        </button>
+                                    </h2>
+                                    <div id="collapseCryptoFour" class="accordion-collapse collapse" aria-labelledby="headingCryptoFour" data-bs-parent="#cryptanalyseProgramsAccordion">
+                                        <div class="accordion-body text-start">
+                                            <strong>Énoncé :</strong> Déchiffrer un message encodé avec un carré de Polybe 6x6 comprenant lettres et chiffres.
+                                            <br><br>
+                                            <strong>Explication :</strong> Le script utilise un carré de Polybe (A-Z + 0-9) et décode chaque paire de chiffres en un caractère.
+                                            <br>
+                                            <!-- Bouton pour afficher le code -->
+                                            <button class="btn btn-sm btn-outline-dark mt-3" type="button" data-bs-toggle="collapse" data-bs-target="#codePolybe" aria-expanded="false" aria-controls="codePolybe">
+                                                Afficher le code
+                                            </button>
+
+                                            <div class="collapse mt-3" id="codePolybe">
+                                                <pre><code class="language-python">
+// Code Un Polybe sans clé :
+# Carré de Polybe 6x6 (Lettres de A à Z + chiffres de 0 à 9)
+polybe_square = [
+    ['A', 'B', 'C', 'D', 'E', 'F'],
+    ['G', 'H', 'I', 'J', 'K', 'L'],
+    ['M', 'N', 'O', 'P', 'Q', 'R'],
+    ['S', 'T', 'U', 'V', 'W', 'X'],
+    ['Y', 'Z', '0', '1', '2', '3'],
+    ['4', '5', '6', '7', '8', '9']
+]
+
+# Le texte chiffré donné
+cipher_text = "3233434415262615 153223213115 1542 32334344151143 313342 1415 3411414115 2516526534"
+
+# Fonction pour déchiffrer le texte
+def polybe_decrypt(cipher_text):
+    # Séparer les groupes de chiffres
+    groups = cipher_text.split()
+
+    decrypted_message = []
+
+    # Parcourir chaque groupe
+    for group in groups:
+        decrypted_word = ""
+        # Prendre chaque paire de chiffres dans le groupe
+        for i in range(0, len(group), 2):
+            row = int(group[i]) - 1  # On ajuste pour les indices (commençant à 0)
+            col = int(group[i+1]) - 1
+            decrypted_word += polybe_square[row][col]  # On récupère la lettre ou le chiffre dans le carré
+        decrypted_message.append(decrypted_word)
+
+    return " ".join(decrypted_message)
+
+# Déchiffrer le message
+decrypted_message = polybe_decrypt(cipher_text)
+print(f"Message déchiffré : {decrypted_message}")
+                                                </code></pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div><!-- Fin de l'accordion -->
+
+                            <!-- Bouton de Fermeture -->
+                            <button class="btn btn-custom" data-bs-dismiss="modal">
+                                <i class="fas fa-xmark fa-fw me-2"></i> Fermer la Fenêtre
+                            </button>
+
+                        </div><!-- col-lg-8 -->
+                    </div><!-- row -->
+                </div><!-- container -->
+            </div><!-- modal-body -->
+        </div><!-- modal-content -->
+    </div><!-- modal-dialog -->
+</div><!-- modal fade -->

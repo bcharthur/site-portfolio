@@ -1,0 +1,80 @@
+<!-- Portfolio Modal CC4 (Codage et numération) -->
+<div class="portfolio-modal modal fade" id="portfolioModalCC4" tabindex="-1" aria-labelledby="portfolioModalCC4Label" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center pb-5">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-10">
+                            <!-- Titre -->
+                            <h2 class="portfolio-modal-title text-secondary text-uppercase mb-4">Codage et numération</h2>
+                            <!-- Icon Divider-->
+                            <div class="divider-custom mb-4">
+                                <div class="divider-custom-line"></div>
+                                <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
+                                <div class="divider-custom-line"></div>
+                            </div>
+
+                            <!-- Introduction -->
+                            <p class="mb-4">
+                                Dans cette catégorie, les challenges portent sur le codage et la numération, c'est-à-dire sur la façon dont les nombres sont représentés en différentes bases, ou encore sur le formatage spécifique de nombres (comme les flottants en IEEE 754).
+                                Ci-dessous figurent quelques exemples et explications sur la manière de résoudre ces énigmes, qu'il s'agisse d'addition en base binaire ou d'interpréter un nombre flottant codé sur 32 bits.
+                            </p>
+
+                            <!-- Accordéon des explications -->
+                            <div class="accordion mb-4" id="codingNumbersAccordion">
+
+                                <!-- Programme 1: 1+1=10 -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingCodeOne">
+                                        <button class="accordion-button collapsed text-uppercase" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCodeOne" aria-expanded="false" aria-controls="collapseCodeOne">
+                                            1. 1+1=10
+                                        </button>
+                                    </h2>
+                                    <div id="collapseCodeOne" class="accordion-collapse collapse" aria-labelledby="headingCodeOne" data-bs-parent="#codingNumbersAccordion">
+                                        <div class="accordion-body text-start">
+                                            <strong>Énoncé :</strong> Résoudre des opérations mathématiques en base binaire, par exemple 1 + 1 = 10, ou l'addition de deux nombres binaires 10100001 et 10010000.
+                                            <br><br>
+                                            <strong>Explication :</strong>
+                                            En binaire, 1 + 1 = 10 (soit 2 en décimal).
+                                            Pour l'addition de 10100001 (161 en décimal) et 10010000 (144 en décimal), la somme en décimal est 305, soit 100110001 en binaire.
+                                            <br><br>
+                                            En résumé, la compréhension de la base 2 permet de résoudre facilement ces opérations.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Programme 2: La Mantisse Prend la Float -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingCodeTwo">
+                                        <button class="accordion-button collapsed text-uppercase" type="button" data-bs-toggle="collapse" data-bs-target="#collapseCodeTwo" aria-expanded="false" aria-controls="collapseCodeTwo">
+                                            2. La Mantisse Prend la Float
+                                        </button>
+                                    </h2>
+                                    <div id="collapseCodeTwo" class="accordion-collapse collapse" aria-labelledby="headingCodeTwo" data-bs-parent="#codingNumbersAccordion">
+                                        <div class="accordion-body text-start">
+                                            <strong>Énoncé :</strong> Interpréter des nombres sous forme de flottants IEEE 754 (32 bits).
+                                            <br><br>
+                                            <strong>Explication :</strong>
+                                            Des nombres comme 5, 10, 20, 42 sont représentés en binaire selon le standard IEEE 754. Pour comprendre leur représentation, il suffit d'utiliser un convertisseur IEEE 754 (par exemple : <a href="https://www.h-schmidt.net/FloatConverter/IEEE754.html" target="_blank" rel="noopener noreferrer">ce site</a>), qui permet de convertir entre format binaire (mantisse, exposant, signe) et nombre décimal.
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div><!-- Fin de l'accordion -->
+
+                            <!-- Bouton de Fermeture -->
+                            <button class="btn btn-custom" data-bs-dismiss="modal">
+                                <i class="fas fa-xmark fa-fw me-2"></i> Fermer la Fenêtre
+                            </button>
+
+                        </div><!-- col-lg-10 -->
+                    </div><!-- row -->
+                </div><!-- container -->
+            </div><!-- modal-body -->
+        </div><!-- modal-content -->
+    </div><!-- modal-dialog -->
+</div><!-- modal fade -->

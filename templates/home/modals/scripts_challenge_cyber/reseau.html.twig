@@ -1,0 +1,422 @@
+<!-- Portfolio Modal CC3 (Réseau) -->
+<div class="portfolio-modal modal fade" id="portfolioModalCC3" tabindex="-1" aria-labelledby="portfolioModalCC3Label" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center pb-5">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-10">
+                            <!-- Titre -->
+                            <h2 class="portfolio-modal-title text-secondary text-uppercase mb-4">Réseau</h2>
+                            <!-- Icon Divider-->
+                            <div class="divider-custom mb-4">
+                                <div class="divider-custom-line"></div>
+                                <div class="divider-custom-icon"><i class="fas fa-network-wired"></i></div>
+                                <div class="divider-custom-line"></div>
+                            </div>
+
+                            <!-- Introduction -->
+                            <p class="mb-4">
+                                Dans mes challenges orientés réseau, j'ai développé plusieurs scripts Python pour analyser et résoudre différentes problématiques liées aux paquets réseau, aux DNS, et aux adresses IP/MAC.
+                                Ci-dessous, vous trouverez différents exercices, leur énoncé, une brève explication et la possibilité d'afficher le code source.
+                            </p>
+
+                            <!-- Accordéon des programmes Réseau -->
+                            <div class="accordion mb-4" id="networkProgramsAccordion">
+
+                                <!-- Programme 1: DNS - transfert de zone -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingNetOne">
+                                        <button class="accordion-button collapsed text-uppercase" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNetOne" aria-expanded="false" aria-controls="collapseNetOne">
+                                            <span>1. DNS - Transfert de zone <img src="{{ asset('img/rootme.svg') }}" alt="CyberLearning Logo" style="width: 1.5rem; height: auto;" /></span>
+                                        </button>
+                                    </h2>
+                                    <div id="collapseNetOne" class="accordion-collapse collapse" aria-labelledby="headingNetOne" data-bs-parent="#networkProgramsAccordion">
+                                        <div class="accordion-body text-start">
+                                            <strong>Énoncé :</strong> Réaliser un transfert de zone DNS sur le domaine "ch11.challenge01.root-me.org" avec le port 54011.
+                                            <br><br>
+                                            <strong>Explication :</strong> Ce script tente d'effectuer un transfert de zone (AXFR) sur un serveur DNS cible. Cela permet d'obtenir des informations détaillées sur la zone, dont éventuellement des enregistrements TXT révélant un flag ou des informations sensibles.
+                                            <br>
+                                            <!-- Bouton pour afficher le code -->
+                                            <button class="btn btn-sm btn-outline-dark mt-3" type="button" data-bs-toggle="collapse" data-bs-target="#codeDNSTransfer" aria-expanded="false" aria-controls="codeDNSTransfer">
+                                                Afficher le code
+                                            </button>
+
+                                            <div class="collapse mt-3" id="codeDNSTransfer">
+                                                <pre><code class="language-python">
+import dns.zone
+import dns.query
+import dns.exception
+import socket
+import sys
+import traceback
+
+
+def resolve_host(host):
+    """
+    R�sout le nom d'h�te en adresse IP.
+    """
+    try:
+        ip = socket.gethostbyname(host)
+        print(f"L'h�te {host} a �t� r�solu en {ip}")
+        return ip
+    except socket.gaierror as e:
+        print(f"Erreur de r�solution de l'h�te {host}: {e}")
+        return None
+
+
+def transfert_zone(host, domain, port):
+    """
+    Tente de r�aliser un transfert de zone DNS.
+    """
+    try:
+        # R�solution de l'h�te en IP
+        ip = resolve_host(host)
+        if not ip:
+            print("Impossible de r�soudre l'h�te. Abandon du transfert de zone.")
+            return
+
+        print(f"\nTentative de transfert de zone pour le domaine {domain} sur {ip}:{port}...")
+
+        # Effectuer le transfert de zone en utilisant AXFR
+        try:
+            xfr = dns.query.xfr(ip, domain, port=port, timeout=10)
+            zone = dns.zone.from_xfr(xfr)
+            print(f"\nTransfert de zone r�ussi pour le domaine : {domain}\n")
+        except dns.exception.FormError:
+            print("Erreur de formulaire DNS. Le transfert de zone a �chou�.")
+            return
+        except dns.query.BadResponse:
+            print("Mauvaise r�ponse du serveur DNS. Le transfert de zone a �chou�.")
+            return
+
+        # Parcourir et afficher les enregistrements DNS, en se concentrant sur les enregistrements TXT
+        print("Extraction des enregistrements TXT :\n")
+        for name, node in zone.nodes.items():
+            rdatasets = zone.get_rdataset(name, 'TXT')
+            if rdatasets:
+                for rdataset in rdatasets:
+                    for txt in rdataset.strings:
+                        txt_str = txt.decode('utf-8')
+                        print(f"TXT record for {name}.{domain}: {txt_str}")
+
+    except Exception as e:
+        print(f"Une erreur inattendue est survenue : {e}")
+        traceback.print_exc()
+
+
+if __name__ == "__main__":
+    # Param�tres de connexion au challenge
+    host = 'challenge01.root-me.org'  # H�te du challenge
+    domain = 'ch11.challenge01.root-me.org'  # Domaine cible
+    port = 54011  # Port sp�cifi�
+
+    transfert_zone(host, domain, port)
+                                                </code></pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Programme 2: IP source -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingNetTwo">
+                                        <button class="accordion-button collapsed text-uppercase" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNetTwo" aria-expanded="false" aria-controls="collapseNetTwo">
+                                            <span>2. IP source <img src="{{ asset('img/cl.png') }}" alt="CyberLearning Logo" style="width: 1.5rem; height: auto; filter: invert(100%);" /></span>
+                                        </button>
+                                    </h2>
+                                    <div id="collapseNetTwo" class="accordion-collapse collapse" aria-labelledby="headingNetTwo" data-bs-parent="#networkProgramsAccordion">
+                                        <div class="accordion-body text-start">
+                                            <strong>Énoncé :</strong> Déterminer l'adresse IP source à partir d'un dump hexadécimal d'un paquet réseau.
+                                            <br><br>
+                                            <strong>Explication :</strong> Le script parse un dump hexadécimal, extrait l'en-tête IP, et récupère l'adresse IP source. Cette opération simule l'analyse forensique d'un paquet réseau.
+                                            <br>
+                                            <!-- Bouton pour afficher le code -->
+                                            <button class="btn btn-sm btn-outline-dark mt-3" type="button" data-bs-toggle="collapse" data-bs-target="#codeIPSource" aria-expanded="false" aria-controls="codeIPSource">
+                                                Afficher le code
+                                            </button>
+
+                                            <div class="collapse mt-3" id="codeIPSource">
+                                                <pre><code class="language-python">
+# IP source (10 points)
+#
+# PENSE A CHANGER LA TRAME, LA J'AI MIS LA MIENNE MAIS FAUT ADAPTER
+#
+# 0000	42 57 C5 2A 43 8C 42 7C 55 3D B9 74 08 00 45 00
+# 0010	00 28 00 00 40 00 40 01 82 AE BF 5C C0 E1 3D 15
+# 0020	BD 84 08 00 42 42 00 01 00 02 01 23 45 67 89 AB
+# 0030	09 00 FF FF FF FF 00 00 00 00 00 00 12 56 89 15
+#
+# Page du challenge : https://cyber-learning.fr/test-cybersecurite/?id_sujet=IPsource&matiere=7
+#
+# Proposition de code par br0nson
+# LinkedIn : t.ly/fra3R
+
+
+# Dump hexadécimal fourni
+hex_dump = """
+0000	42 57 C5 2A 43 8C 42 7C 55 3D B9 74 08 00 45 00
+0010	00 28 00 00 40 00 40 01 82 AE BF 5C C0 E1 3D 15
+0020	BD 84 08 00 42 42 00 01 00 02 01 23 45 67 89 AB
+0030	09 00 FF FF FF FF 00 00 00 00 00 00 12 56 89 15
+"""
+
+
+def extract_source_ip(hex_dump):
+    # Initialisation de la liste des octets
+    byte_list = []
+
+    # Parcours de chaque ligne du dump
+    for line in hex_dump.strip().split('\n'):
+        # Séparation de l'offset et des données hexadécimales
+        parts = line.split('\t')
+        if len(parts) < 2:
+            continue  # Ignorer les lignes mal formatées
+        hex_bytes = parts[1].split()
+        # Ajout des octets à la liste
+        byte_list.extend(hex_bytes)
+
+    # Vérification que nous avons suffisamment d'octets
+    if len(byte_list) < 30:
+        raise ValueError("Le dump hexadécimal est trop court pour extraire l'adresse IP source.")
+
+    # Les adresses IP dans un paquet Ethernet sont situées après les 14 premiers octets (en-tête Ethernet)
+    # Dans l'en-tête IP, l'adresse source se trouve aux octets 12 à 15 (0-indexé)
+    # Donc, l'index global dans le dump est 14 + 12 = 26 à 29
+    source_ip_bytes = byte_list[26:30]
+
+    # Conversion des octets hexadécimaux en décimal
+    source_ip = '.'.join(str(int(byte, 16)) for byte in source_ip_bytes)
+
+    return source_ip
+
+
+# Extraction et affichage de l'adresse IP source
+source_ip = extract_source_ip(hex_dump)
+print("L'adresse IP source est :", source_ip)
+                                                </code></pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Programme 3: IP destination -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingNetThree">
+                                        <button class="accordion-button collapsed text-uppercase" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNetThree" aria-expanded="false" aria-controls="collapseNetThree">
+                                            <span>3. IP destination <img src="{{ asset('img/cl.png') }}" alt="CyberLearning Logo" style="width: 1.5rem; height: auto; filter: invert(100%);" /></span>
+                                        </button>
+                                    </h2>
+                                    <div id="collapseNetThree" class="accordion-collapse collapse" aria-labelledby="headingNetThree" data-bs-parent="#networkProgramsAccordion">
+                                        <div class="accordion-body text-start">
+                                            <strong>Énoncé :</strong> Trouver l'adresse IP de destination dans un autre dump hexadécimal.
+                                            <br><br>
+                                            <strong>Explication :</strong> Semblable à l'IP source, ce code extrait l'IP de destination d'un paquet.
+                                            <br>
+                                            <!-- Bouton pour afficher le code -->
+                                            <button class="btn btn-sm btn-outline-dark mt-3" type="button" data-bs-toggle="collapse" data-bs-target="#codeIPDestination" aria-expanded="false" aria-controls="codeIPDestination">
+                                                Afficher le code
+                                            </button>
+
+                                            <div class="collapse mt-3" id="codeIPDestination">
+                                                <pre><code class="language-python">
+# IP destination (10 points)
+#
+# PENSE A CHANGER LA TRAME, LA J'AI MIS LA MIENNE MAIS FAUT ADAPTER
+#
+# 0000	42 0B AF C2 63 DC 42 E4 3D C2 0F 16 08 00 45 00
+# 0010	00 28 00 00 40 00 40 01 82 AE FC 8F A1 1C  2A F5
+# 0020	2C DA 08 00 42 42 00 01 00 02 01 23 45 67 89 AB
+# 0030	09 00 FF FF FF FF 00 00 00 00 00 00 12 56 89 15
+#
+# Page du challenge : https://cyber-learning.fr/test-cybersecurite/?id_sujet=IPdesti4t&matiere=7
+#
+# Proposition de code par br0nson
+# LinkedIn : t.ly/fra3R
+
+
+def extract_ip_address(hex_data):
+   # Concaténation de toutes les lignes de données hexadécimales
+   hex_string = "".join(hex_data.split())
+
+
+   # L'adresse IP de destination commence à l'octet 30 et s'étend sur 4 octets (8 caractères hexadécimaux)
+   ip_destination_hex = hex_string[60:68]
+
+
+   # Conversion de l'adresse IP de destination en format décimal
+   ip_destination = ".".join(str(int(ip_destination_hex[i:i + 2], 16)) for i in range(0, len(ip_destination_hex), 2))
+
+
+   return ip_destination
+
+
+
+
+# Données hexadécimales fournies
+hex_data = """
+42 0B AF C2 63 DC 42 E4 3D C2 0F 16 08 00 45 00
+00 28 00 00 40 00 40 01 82 AE FC 8F A1 1C  2A F5
+2C DA 08 00 42 42 00 01 00 02 01 23 45 67 89 AB
+09 00 FF FF FF FF 00 00 00 00 00 00 12 56 89 15
+"""
+
+
+ip_destination_address = extract_ip_address(hex_data)
+print("L'adresse IP de destination est :", ip_destination_address)
+                                                </code></pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Programme 4: MAC destination -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingNetFour">
+                                        <button class="accordion-button collapsed text-uppercase" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNetFour" aria-expanded="false" aria-controls="collapseNetFour">
+                                            <span>4. Mac destination <img src="{{ asset('img/cl.png') }}" alt="CyberLearning Logo" style="width: 1.5rem; height: auto; filter: invert(100%);" /></span>
+                                        </button>
+                                    </h2>
+                                    <div id="collapseNetFour" class="accordion-collapse collapse" aria-labelledby="headingNetFour" data-bs-parent="#networkProgramsAccordion">
+                                        <div class="accordion-body text-start">
+                                            <strong>Énoncé :</strong> Extraire l'adresse MAC de destination du paquet Ethernet.
+                                            <br><br>
+                                            <strong>Explication :</strong> Les 6 premiers octets de la trame Ethernet représentent la MAC de destination. Le script parse l'hex et formate l'adresse MAC.
+                                            <br>
+                                            <!-- Bouton pour afficher le code -->
+                                            <button class="btn btn-sm btn-outline-dark mt-3" type="button" data-bs-toggle="collapse" data-bs-target="#codeMACDestination" aria-expanded="false" aria-controls="codeMACDestination">
+                                                Afficher le code
+                                            </button>
+
+                                            <div class="collapse mt-3" id="codeMACDestination">
+                                                <pre><code class="language-python">
+# MAC destination (10 points)
+#
+# PENSE A CHANGER LA TRAME, LA J'AI MIS LA MIENNE MAIS FAUT ADAPTER
+#
+# 0000	42 50 D3 13 18 9C 42 09 F4 55 C9 3C 08 00 45 00
+# 0010	00 28 00 00 40 00 40 01 82 AE 3F 2D 8B 74 3C AB
+# 0020	F5 0A 08 00 42 42 00 01 00 02 01 23 45 67 89 AB
+# 0030	09 00 FF FF FF FF 00 00 00 00 00 00 12 56 89 15
+#
+# Page du challenge : https://cyber-learning.fr/test-cybersecurite/?id_sujet=macdesti4t&matiere=7
+#
+# Proposition de code par br0nson
+# LinkedIn : t.ly/fra3R
+
+
+def extract_mac_address(hex_data):
+    # Concaténation de toutes les lignes de données hexadécimales
+    hex_string = "".join(hex_data.split())
+
+    # Les 6 premiers octets représentent l'adresse MAC de destination
+    mac_destination_hex = hex_string[0:12]
+
+    # Séparation des octets pour le format XX:XX:XX:XX:XX:XX
+    mac_destination = ":".join(mac_destination_hex[i:i + 2] for i in range(0, len(mac_destination_hex), 2))
+
+    return mac_destination.upper()
+
+# Données hexadécimales fournies
+hex_data = """
+42 50 D3 13 18 9C 42 09 F4 55 C9 3C 08 00 45 00
+00 28 00 00 40 00 40 01 82 AE 3F 2D 8B 74 3C AB
+F5 0A 08 00 42 42 00 01 00 02 01 23 45 67 89 AB
+09 00 FF FF FF FF 00 00 00 00 00 00 12 56 89 15
+"""
+
+mac_destination_address = extract_mac_address(hex_data)
+print("L'adresse MAC de destination est :", mac_destination_address)
+                                                </code></pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Programme 5: MAC source -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingNetFive">
+                                        <button class="accordion-button collapsed text-uppercase" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNetFive" aria-expanded="false" aria-controls="collapseNetFive">
+                                            <span>5. Mac source <img src="{{ asset('img/cl.png') }}" alt="CyberLearning Logo" style="width: 1.5rem; height: auto; filter: invert(100%);" /></span>
+                                        </button>
+                                    </h2>
+                                    <div id="collapseNetFive" class="accordion-collapse collapse" aria-labelledby="headingNetFive" data-bs-parent="#networkProgramsAccordion">
+                                        <div class="accordion-body text-start">
+                                            <strong>Énoncé :</strong> Déterminer la MAC source de la trame Ethernet.
+                                            <br><br>
+                                            <strong>Explication :</strong> Après les 6 octets de la MAC de destination, les 6 octets suivants correspondent à la MAC source.
+                                            <br>
+                                            <!-- Bouton pour afficher le code -->
+                                            <button class="btn btn-sm btn-outline-dark mt-3" type="button" data-bs-toggle="collapse" data-bs-target="#codeMACSource" aria-expanded="false" aria-controls="codeMACSource">
+                                                Afficher le code
+                                            </button>
+
+                                            <div class="collapse mt-3" id="codeMACSource">
+                                                <pre><code class="language-python">
+# MAC source (10 points)
+#
+# PENSE A CHANGER LA TRAME, LA J'AI MIS LA MIENNE MAIS FAUT ADAPTER
+#
+# 0000	42 19 CD BD 06 42 42 ED 98 45 3B B1 08 00 45 00
+# 0010	00 28 00 00 40 00 40 01 82 AE 2A 22 BF 2C  93 E9
+# 0020	62 D5 08 00 42 42 00 01 00 02 01 23 45 67 89 AB
+# 0030	09 00 FF FF FF FF 00 00 00 00 00 00 12 56 89 15
+#
+# Page du challenge : https://cyber-learning.fr/test-cybersecurite/?id_sujet=macSource4&matiere=7
+#
+# Proposition de code par br0nson
+# LinkedIn : t.ly/fra3R
+
+
+def extract_mac_address(hex_data):
+   # Concaténation de toutes les lignes de données hexadécimales
+   hex_string = "".join(hex_data.split())
+
+
+   # Les 6 octets après les 6 premiers octets (adresse MAC de destination)
+   mac_source_hex = hex_string[12:24]
+
+
+   # Séparation des octets pour le format XX:XX:XX:XX:XX:XX
+   mac_source = ":".join(mac_source_hex[i:i + 2] for i in range(0, len(mac_source_hex), 2))
+
+
+   return mac_source.upper()
+
+
+
+
+# Données hexadécimales fournies
+hex_data = """
+42 19 CD BD 06 42 42 ED 98 45 3B B1 08 00 45 00
+00 28 00 00 40 00 40 01 82 AE 2A 22 BF 2C  93 E9
+62 D5 08 00 42 42 00 01 00 02 01 23 45 67 89 AB
+09 00 FF FF FF FF 00 00 00 00 00 00 12 56 89 15
+"""
+
+
+mac_source_address = extract_mac_address(hex_data)
+print("L'adresse MAC source est :", mac_source_address)
+                                                </code></pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div><!-- Fin de l'accordion -->
+
+                            <!-- Bouton de Fermeture -->
+                            <button class="btn btn-custom" data-bs-dismiss="modal">
+                                <i class="fas fa-xmark fa-fw me-2"></i> Fermer la Fenêtre
+                            </button>
+
+                        </div><!-- col-lg-10 -->
+                    </div><!-- row -->
+                </div><!-- container -->
+            </div><!-- modal-body -->
+        </div><!-- modal-content -->
+    </div><!-- modal-dialog -->
+</div><!-- modal fade -->
