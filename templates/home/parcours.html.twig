@@ -2,94 +2,149 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Stepper Personnalisé</title>
-    <!-- Inclusion de Bootstrap CSS -->
-    <!-- Assurez-vous d'inclure Bootstrap CSS dans votre projet -->
-</head>
-<style>
-    /* Styles personnalisés */
-    .horizontal-timeline .items {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        border-top: 3px solid #e9ecef;
-    }
+    <title>Mon Parcours</title>
+{#    <!-- Inclusion de Bootstrap CSS -->#}
+{#    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">#}
+{#    <!-- Inclusion de Font Awesome pour les icônes -->#}
+{#    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">#}
+    <style>
+        /* Styles personnalisés réduits */
 
-    .horizontal-timeline .items .items-list {
-        position: relative;
-        text-align: center;
-        padding-top: 70px;
-    }
-
-    .horizontal-timeline .items .items-list:before {
-        content: "";
-        position: absolute;
-        height: 36px;
-        border-right: 2px dashed #dee2e6;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-    }
-
-    .horizontal-timeline .items .items-list .event-date {
-        position: absolute;
-        top: 36px;
-        left: 50%;
-        transform: translateX(-50%);
-        width: 75px;
-        font-size: 0.9rem;
-        padding-top: 8px;
-    }
-
-    /* Media Queries pour la réactivité */
-    @media (max-width: 991px) {
         .horizontal-timeline .items {
-            grid-template-columns: repeat(2, 1fr);
-            grid-template-areas:
-                    "item1 item2"
-                    "item3 item4";
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            border-top: 3px solid #e9ecef;
+            position: relative;
         }
-        .horizontal-timeline .items .items-list:nth-child(1) {
-            grid-area: item1;
-        }
-        .horizontal-timeline .items .items-list:nth-child(2) {
-            grid-area: item2;
-        }
-        .horizontal-timeline .items .items-list:nth-child(3) {
-            grid-area: item3;
-        }
-        .horizontal-timeline .items .items-list:nth-child(4) {
-            grid-area: item4;
-        }
-    }
 
-    @media (max-width: 767px) {
-        .horizontal-timeline .items {
-            grid-template-columns: 1fr;
-            grid-template-areas:
-                    "item1"
-                    "item2"
-                    "item3"
-                    "item4";
+        .horizontal-timeline .items::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 0;
+            height: 100%;
+            border-left: 2px dashed #dee2e6;
+            transform: translateX(-50%);
+            display: none; /* Initialement caché, affiché en mode vertical */
         }
+
         .horizontal-timeline .items .items-list {
-            padding-top: 50px;
+            position: relative;
+            text-align: center;
+            padding-top: 70px;
         }
 
-        /* Suppression des traits en pointillés sur mobile */
         .horizontal-timeline .items .items-list:before {
-            display: none;
+            content: "";
+            position: absolute;
+            height: 36px;
+            border-right: 2px dashed #dee2e6;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
         }
 
-        /* Ajout d'espace entre la date et l'intitulé du diplôme */
         .horizontal-timeline .items .items-list .event-date {
-            margin-bottom: 10px;
+            position: absolute;
+            top: 36px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 75px;
+            font-size: 0.9rem;
+            padding-top: 8px;
         }
 
-        .horizontal-timeline .items .items-list h5 {
-            margin-top: 10px;
+        /* Media Queries pour la réactivité */
+        @media (max-width: 991px) {
+            .horizontal-timeline .items {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-areas:
+                        "item1 item2"
+                        "item3 item4";
+            }
+            .horizontal-timeline .items .items-list:nth-child(1) {
+                grid-area: item1;
+            }
+            .horizontal-timeline .items .items-list:nth-child(2) {
+                grid-area: item2;
+            }
+            .horizontal-timeline .items .items-list:nth-child(3) {
+                grid-area: item3;
+            }
+            .horizontal-timeline .items .items-list:nth-child(4) {
+                grid-area: item4;
+            }
         }
-    }
-</style>
+
+        @media (max-width: 767px) {
+            .horizontal-timeline .items {
+                display: flex;
+                flex-direction: column;
+                border-top: none;
+                position: relative;
+            }
+            .horizontal-timeline .items::before {
+                display: block;
+                left: 20px;
+                top: 0;
+                width: 2px;
+                height: 100%;
+                border-left: 2px dashed #dee2e6;
+            }
+            .horizontal-timeline .items .items-list {
+                padding-top: 20px;
+                padding-left: 40px;
+                text-align: left;
+                margin-bottom: 30px;
+            }
+            .horizontal-timeline .items .items-list:before {
+                display: none;
+            }
+            .horizontal-timeline .items .items-list .event-date {
+                position: absolute;
+                top: 0;
+                left: 0;
+                transform: translateX(0);
+                width: auto;
+                padding-top: 5px;
+                margin-bottom: 5px;
+            }
+            .horizontal-timeline .items .items-list .event-date.badge {
+                position: relative;
+                left: 0;
+                transform: none;
+            }
+            .horizontal-timeline .items .items-list h5 {
+                margin-top: 5px;
+            }
+        }
+
+        /* Styles pour les cartes des logos */
+        .logo-card {
+            border: none;
+            background-color: transparent;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            padding: 1rem; /* Utilisation de Bootstrap pour le padding */
+        }
+
+        /* Suppression des styles personnalisés pour les images */
+        /* Utilisation des classes Bootstrap pour la taille et les marges */
+
+        .logo-card-text {
+            font-size: 0.9rem;
+            color: #dddddd;
+        }
+
+        /* Suppression des marges latérales personnalisées */
+        /* Utilisation des classes Bootstrap pour le padding */
+    </style>
+</head>
 <body>
 <!-- Section Parcours -->
 <section class="page-section parcours text-white mb-0 d-flex align-items-center" id="parcours" style="min-height: 100vh; background-color: #0e243b;">
@@ -98,12 +153,39 @@
         <!-- Titre de la section -->
         <h2 class="page-section-heading text-center text-white text-uppercase mb-5">Mon parcours</h2>
         <!-- Divider avec icône -->
-        <div class="divider-custom divider-light">
-            <div class="divider-custom-line"></div>
-            <div class="divider-custom-icon"><i class="fa-solid fa-graduation-cap"></i></div>
-            <div class="divider-custom-line"></div>
+        <div class="divider-custom divider-light mb-5 d-flex justify-content-center align-items-center">
+            <div class="divider-custom-line flex-grow-1"></div>
+            <div class="divider-custom-icon mx-3"><i class="fa-solid fa-graduation-cap"></i></div>
+            <div class="divider-custom-line flex-grow-1"></div>
         </div>
-        <br><br><br>
+
+        <!-- Row pour les cartes des logos -->
+        <div class="row mb-5">
+            <!-- Carte 1: Groupama Centre Atlantique -->
+            <div class="col-md-6 mb-4 px-3">
+                <div class="card logo-card h-100">
+                    <img src="{{ asset('img/parcours/groupama_centre_atlantique.png')}}" alt="Groupama Centre Atlantique" class="img-fluid mb-4" style="max-width: 150px;">
+                    <div class="card-body p-0">
+                        <!-- Suppression du titre car il est déjà dans le logo -->
+                        <!-- <h5 class="logo-card-title">Groupama Centre Atlantique</h5> -->
+                        <p class="logo-card-text">Groupama Centre Atlantique - Alternance 2 ans - Développeur Full-Stack </p>
+                    </div>
+                </div>
+            </div>
+            <!-- Carte 2: ENI École Informatique -->
+            <div class="col-md-6 mb-4 px-3">
+                <div class="card logo-card h-100">
+                    <img src="{{ asset('img/parcours/logo_eni.png')}}" alt="ENI École Informatique" class="img-fluid mb-4" style="max-width: 150px;">
+                    <div class="card-body p-0">
+                        <!-- Suppression du titre car il est déjà dans le logo -->
+                        <!-- <h5 class="logo-card-title">ENI École Informatique</h5> -->
+                        <p class="logo-card-text">ENI Ecole Informatique - BAC+3 et +4 - Développeur Full-Stack</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Row pour le horizontal-timeline -->
         <div class="row">
             <div class="col-lg-12">
 
@@ -112,49 +194,49 @@
                     <ul class="list-inline items">
                         <li class="list-inline-item items-list">
                             <div class="px-4">
-                                <div class="event-date badge bg-custom" style="color: white">2027</div>
+                                <div class="event-date badge bg-custom text-white">2027</div>
                                 <h5 class="pt-2">Expert en Sécurité Digitale</h5>
                                 <p class="text-muted">
                                     Bac +5
                                 </p>
                                 <div>
-                                    <a href="https://www.francecompetences.fr/recherche/rncp/36399/" target="_blank" class="btn btn-primary btn-sm">Voir plus</a>
+                                    <a href="https://www.francecompetences.fr/recherche/rncp/36399/" target="_blank" class="btn btn-outline-light btn-sm">Voir plus</a>
                                 </div>
                             </div>
                         </li>
                         <li class="list-inline-item items-list">
                             <div class="px-4">
-                                <div class="event-date badge bg-white" style="color: #0e243b">2025</div>
+                                <div class="event-date badge bg-white text-dark">2025</div>
                                 <h5 class="pt-2">Concepteur Développeur d'Applications</h5>
                                 <p class="text-muted">
                                     Bac +4
                                 </p>
                                 <div>
-                                    <a href="https://www.francecompetences.fr/recherche/rncp/37873/" target="_blank" class="btn btn-primary btn-sm">Voir plus</a>
+                                    <a href="https://www.francecompetences.fr/recherche/rncp/37873/" target="_blank" class="btn btn-outline-light btn-sm">Voir plus</a>
                                 </div>
                             </div>
                         </li>
                         <li class="list-inline-item items-list">
                             <div class="px-4">
-                                <div class="event-date badge bg-white" style="color: #0e243b">2023</div>
+                                <div class="event-date badge bg-white text-dark">2023</div>
                                 <h5 class="pt-2">BTS Systèmes Numériques Informatique et Réseaux</h5>
                                 <p class="text-muted">
                                     Bac +2
                                 </p>
                                 <div>
-                                    <a href="https://www.francecompetences.fr/recherche/rncp/37391/" target="_blank" class="btn btn-primary btn-sm">Voir plus</a>
+                                    <a href="https://www.francecompetences.fr/recherche/rncp/37391/" target="_blank" class="btn btn-outline-light btn-sm">Voir plus</a>
                                 </div>
                             </div>
                         </li>
                         <li class="list-inline-item items-list">
                             <div class="px-4">
-                                <div class="event-date badge bg-white" style="color:#0e243b;">2021</div>
+                                <div class="event-date badge bg-white text-dark">2021</div>
                                 <h5 class="pt-2">BAC STI2D option SIN</h5>
                                 <p class="text-muted">
                                     Baccalauréat Technologique
                                 </p>
                                 <div>
-                                    <a href="https://www.onisep.fr/formation/apres-la-3-la-voie-generale-et-technologique/qu-est-ce-que-la-voie-generale-et-technologique/la-voie-technologique-en-premiere-et-terminale/le-bac-sti2d-sciences-et-technologies-de-l-industrie-et-du-developpement-durable" class="btn btn-primary btn-sm">Voir plus</a>
+                                    <a href="https://www.onisep.fr/formation/apres-la-3-la-voie-generale-et-technologique/qu-est-ce-que-la-voie-generale-et-technologique/la-voie-technologique-en-premiere-et-terminale/le-bac-sti2d-sciences-et-technologies-de-l-industrie-et-du-developpement-durable" class="btn btn-outline-light btn-sm">Voir plus</a>
                                 </div>
                             </div>
                         </li>
@@ -168,7 +250,7 @@
     </div>
 </section>
 
-<!-- Inclusion de Bootstrap JS (optionnel) -->
-<!-- Assurez-vous d'inclure Bootstrap JS et jQuery si nécessaire -->
+<!-- Inclusion de Bootstrap JS (optionnel, pour certaines fonctionnalités Bootstrap) -->
+{#<script src="https://maxcdn.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>#}
 </body>
 </html>
