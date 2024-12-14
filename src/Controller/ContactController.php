@@ -1,67 +1,99 @@
 <?php
 // src/Controller/ContactController.php
+
 namespace App\Controller;
 
-use App\Form\ContactType;
+use App\Entity\Contact;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-// Importation de MailerInterface
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
-// Importation pour gérer les exceptions
-use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Security\Csrf\CsrfTokenManagerInterface;
+use Symfony\Component\Security\Csrf\CsrfToken;
 
 class ContactController extends AbstractController
 {
-    /**
-     * @Route("/contact", name="app_contact")
-     */
-    public function index(Request $request, MailerInterface $mailer): Response
+    #[Route('/contact', name: 'contact_form')]
+    public function contact(CsrfTokenManagerInterface $csrfTokenManager)
     {
-        // Création du formulaire
-        $form = $this->createForm(ContactType::class);
+        // Générer un jeton CSRF
+        $csrfToken = $csrfTokenManager->getToken('contact_form')->getValue();
 
-        // Traitement de la requête
-        $form->handleRequest($request);
+        return $this->render('contact.html.twig', [
+            'csrf_token' => $csrfToken,
+        ]);
+    }
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            // Récupération des données du formulaire
-            $contactFormData = $form->getData();
+    #[Route('/contact/send', name: 'contact_send', methods: ['POST'])]
+    public function send(
+        Request $request,
+        EntityManagerInterface $entityManager,
+        ValidatorInterface $validator,
+        CsrfTokenManagerInterface $csrfTokenManager
+    ): JsonResponse
+    {
+        // Décoder les données JSON reçues
+        $data = json_decode($request->getContent(), true);
 
-            // Création de l'email
-            $email = (new Email())
-                ->from('notifportfolio@gmail.com')
-                ->to('art.bouchaud@gmail.com')
-                ->subject('Nouveau message de contact')
-                ->text(
-                    'Vous avez reçu un nouveau message de ' . $contactFormData['name'] . "\n" .
-                    'Email : ' . $contactFormData['email'] . "\n" .
-                    'Numéro de téléphone : ' . $contactFormData['phone'] . "\n\n" .
-                    'Message : ' . $contactFormData['message']
-                );
+        // Récupérer le jeton CSRF
+        $submittedToken = $data['csrf_token'] ?? '';
 
-            try {
-                // Envoi de l'email
-                $mailer->send($email);
-
-                // Ajout d'un message flash
-                $this->addFlash('success', 'Votre message a été envoyé avec succès.');
-
-                // Redirection pour éviter la resoumission du formulaire
-                return $this->redirectToRoute('app_contact');
-            } catch (TransportExceptionInterface $e) {
-                // Gestion de l'erreur
-                $this->addFlash('error', 'Une erreur est survenue lors de l\'envoi de votre message.');
-
-                // Vous pouvez éventuellement enregistrer l'erreur dans les logs
-            }
+        // Valider le jeton CSRF
+        if (!$csrfTokenManager->isTokenValid(new CsrfToken('contact_form', $submittedToken))) {
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => 'Jeton CSRF invalide.'
+            ], 400);
         }
 
-        // Affichage du formulaire
-        return $this->render('contact.html.twig', [
-            'form' => $form->createView(),
+        // Récupérer les champs du formulaire
+        $name = $data['name'] ?? '';
+        $email = $data['email'] ?? '';
+        $phone = $data['phone'] ?? '';
+        $message = $data['message'] ?? '';
+
+        // Créer une nouvelle entité Contact
+        $contact = new Contact();
+        $contact->setName($name);
+        $contact->setEmail($email);
+        $contact->setPhone($phone);
+        $contact->setMessage($message);
+        // created_at est déjà initialisé dans le constructeur
+
+        // Valider l'entité
+        $errors = $validator->validate($contact);
+
+        if (count($errors) > 0) {
+            $errorMessages = [];
+            foreach ($errors as $error) {
+                $errorMessages[] = $error->getMessage();
+            }
+
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => implode(' ', $errorMessages)
+            ], 400);
+        }
+
+        try {
+            // Enregistrer l'entité en base de données
+            $entityManager->persist($contact);
+            $entityManager->flush();
+        } catch (\Exception $e) {
+            // Log l'erreur pour le débogage (optionnel)
+            // $this->get('logger')->error($e->getMessage());
+
+            return new JsonResponse([
+                'status' => 'error',
+                'message' => 'Échec de l\'enregistrement des données de contact.'
+            ], 500);
+        }
+
+        return new JsonResponse([
+            'status' => 'success',
+            'message' => 'Vos données de contact ont été enregistrées avec succès.'
         ]);
     }
 }
