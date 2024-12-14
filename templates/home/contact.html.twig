@@ -1,4 +1,4 @@
-<!-- Contact Section-->
+{# templates/contact.html.twig #}
 <section class="page-section" id="contact">
     <div class="container">
         <!-- Contact Section Heading-->
@@ -9,57 +9,124 @@
             <div class="divider-custom-icon"><i class="fas fa-star"></i></div>
             <div class="divider-custom-line"></div>
         </div>
+
         <!-- Contact Section Form-->
         <div class="row justify-content-center">
             <div class="col-lg-8 col-xl-7">
+                <form id="contactForm">
+                    <!-- Champ caché pour le jeton CSRF -->
+                    <input type="hidden" id="csrf_token" name="csrf_token" value="{{ csrf_token }}">
 
-                <form id="contactForm" >
                     <!-- Name input-->
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="name" type="text" placeholder="Enter your name..." data-sb-validations="required" />
-                        <label for="name">Full name</label>
-                        <div class="invalid-feedback" data-sb-feedback="name:required">A name is required.</div>
+                        <input class="form-control" id="name" name="name" type="text" placeholder="Entrez votre nom..." required />
+                        <label for="name">Nom complet</label>
+                        <div class="invalid-feedback">Un nom est requis.</div>
                     </div>
                     <!-- Email address input-->
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="email" type="email" placeholder="name@example.com" data-sb-validations="required,email" />
-                        <label for="email">Email address</label>
-                        <div class="invalid-feedback" data-sb-feedback="email:required">An email is required.</div>
-                        <div class="invalid-feedback" data-sb-feedback="email:email">Email is not valid.</div>
+                        <input class="form-control" id="email" name="email" type="email" placeholder="nom@example.com" required />
+                        <label for="email">Adresse email</label>
+                        <div class="invalid-feedback">Une adresse email est requise.</div>
                     </div>
                     <!-- Phone number input-->
                     <div class="form-floating mb-3">
-                        <input class="form-control" id="phone" type="tel" placeholder="(123) 456-7890" data-sb-validations="required" />
-                        <label for="phone">Phone number</label>
-                        <div class="invalid-feedback" data-sb-feedback="phone:required">A phone number is required.</div>
+                        <input class="form-control" id="phone" name="phone" type="tel" placeholder="(123) 456-7890" />
+                        <label for="phone">Numéro de téléphone</label>
+                        <div class="invalid-feedback">Un numéro de téléphone est requis.</div>
                     </div>
                     <!-- Message input-->
                     <div class="form-floating mb-3">
-                        <textarea class="form-control" id="message" type="text" placeholder="Enter your message here..." style="height: 10rem" data-sb-validations="required"></textarea>
+                        <textarea class="form-control" id="message" name="message" placeholder="Entrez votre message ici..." style="height: 10rem" required></textarea>
                         <label for="message">Message</label>
-                        <div class="invalid-feedback" data-sb-feedback="message:required">A message is required.</div>
+                        <div class="invalid-feedback">Un message est requis.</div>
                     </div>
-                    <!-- Submit success message-->
-                    <!---->
-                    <!-- This is what your users will see when the form-->
-                    <!-- has successfully submitted-->
-                    <div class="d-none" id="submitSuccessMessage">
-                        <div class="text-center mb-3">
-                            <div class="fw-bolder">Form submission successful!</div>
-                            To activate this form, sign up at
-                            <br />
 
+                    <!-- Submit messages -->
+                    <div class="d-none" id="submitSuccessMessage">
+                        <div class="text-center mb-3 text-success">
+                            <div class="fw-bolder">Votre message a bien été envoyé !</div>
                         </div>
                     </div>
-                    <!-- Submit error message-->
-                    <!---->
-                    <!-- This is what your users will see when there is-->
-                    <!-- an error submitting the form-->
-                    <div class="d-none" id="submitErrorMessage"><div class="text-center text-danger mb-3">Error sending message!</div></div>
+                    <div class="d-none" id="submitErrorMessage">
+                        <div class="text-center text-danger mb-3">Erreur lors de l'envoi du message.</div>
+                    </div>
+
                     <!-- Submit Button-->
-                    <button class="btn btn-primary btn-xl" id="submitButton" type="submit">Send</button>
+                    <button class="btn btn-primary btn-xl" id="submitButton" type="submit">Envoyer</button>
                 </form>
             </div>
         </div>
     </div>
 </section>
+
+<!-- Script JS -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.getElementById('contactForm');
+        const successMessage = document.getElementById('submitSuccessMessage');
+        const errorMessage = document.getElementById('submitErrorMessage');
+        const submitButton = document.getElementById('submitButton');
+        const csrfToken = document.getElementById('csrf_token').value;
+
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Réinitialiser les messages
+            successMessage.classList.add('d-none');
+            errorMessage.classList.add('d-none');
+
+            // Récupération des données du formulaire
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const message = document.getElementById('message').value.trim();
+
+            // Validation rapide côté client
+            if (!name || !email || !message) {
+                errorMessage.innerText = 'Veuillez remplir tous les champs obligatoires.';
+                errorMessage.classList.remove('d-none');
+                return;
+            }
+
+            // Désactivation du bouton d'envoi
+            submitButton.disabled = true;
+
+            try {
+                const response = await fetch('{{ path("contact_send") }}', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        name,
+                        email,
+                        phone,
+                        message,
+                        csrf_token: csrfToken
+                    }),
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.status === 'success') {
+                    // Afficher le message de succès
+                    successMessage.classList.remove('d-none');
+                    // Réinitialiser le formulaire
+                    form.reset();
+                } else {
+                    // Afficher le message d'erreur
+                    errorMessage.innerText = result.message || 'Une erreur est survenue. Veuillez réessayer plus tard.';
+                    errorMessage.classList.remove('d-none');
+                }
+            } catch (error) {
+                console.error(error);
+                errorMessage.innerText = 'Erreur lors de la communication avec le serveur.';
+                errorMessage.classList.remove('d-none');
+            } finally {
+                // Réactiver le bouton d'envoi
+                submitButton.disabled = false;
+            }
+        });
+    });
+</script>
