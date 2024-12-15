@@ -3,115 +3,12 @@
 <head>
     <meta charset="UTF-8">
 
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.3.0/css/all.css" crossorigin="anonymous">
 
-    <!-- Slick CSS -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
 
     <link href="{{ asset('css/projets/styles.css') }}" rel="stylesheet" />
 
     <style>
-        /* Ajustements spécifiques à la section "Mes scripts pour résoudre des challenges cyber :" */
-        .challenge-slider .project-item {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            width: 250px; /* Ajustez si besoin */
-            height: 300px; /* Ajustez si besoin */
-            box-sizing: border-box;
-            margin: 10px;
-            position: relative;
-            transition: transform 0.3s ease;
-        }
 
-        .challenge-slider .project-item:hover {
-            transform: scale(1.05);
-        }
-
-        .challenge-slider .portfolio-item {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .challenge-slider .portfolio-item .portfolio-item-caption {
-            position: absolute;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            top: 10px; /* Ajustement vertical */
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            z-index: 10;
-        }
-
-        .challenge-slider .portfolio-item:hover .portfolio-item-caption {
-            opacity: 1;
-        }
-
-        .challenge-slider .project-img-custom {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex: 1;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            overflow: hidden;
-            box-sizing: border-box;
-            padding: 10px;
-        }
-
-        .challenge-slider .project-img-custom.bg-primary {
-            margin-top: 10px; /* Descendre la zone bg-primary */
-        }
-
-        .challenge-slider .project-title {
-            text-align: center;
-            width: 100%;
-            margin-top: 10px;
-            font-size: 1.2rem;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .challenge-slider .slick-slide {
-            padding: 0 20px;
-        }
-
-        .slick-prev:before, .slick-next:before {
-            font-family: "Font Awesome 5 Free";
-            font-weight: 900;
-            font-size: 2rem;
-        }
-
-        .slick-prev:before {
-            content: "\f104";
-        }
-
-        .slick-next:before {
-            content: "\f105";
-        }
-
-        .slick-prev, .slick-next {
-            width: 50px;
-            height: 50px;
-        }
-
-        .slick-prev {
-            left: -70px;
-        }
-
-        .slick-next {
-            right: -70px;
-        }
 
     </style>
 </head>
@@ -394,58 +291,14 @@
 
     </div>
 </section>
+        <!-- jQuery -->
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
 
-<!-- jQuery -->
-<script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
-
-<!-- Slick JS -->
-<script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+        <!-- Slick JS -->
+        <script src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
 
 <!-- Initialisation de Slick -->
-<script>
-    $(document).ready(function(){
-        $('.challenge-slider').slick({
-            infinite: true,
-            slidesToShow: 3,
-            slidesToScroll: 1,
-            arrows: true,
-            centerMode: true,
-            centerPadding: '80px',
-            responsive: [
-                {
-                    breakpoint: 1024,
-                    settings: {
-                        slidesToShow: 3,
-                        centerPadding: '40px'
-                    }
-                },
-                {
-                    breakpoint: 640,
-                    settings: {
-                        slidesToShow: 2,
-                        centerPadding: '20px'
-                    }
-                },
-                {
-                    breakpoint: 480,
-                    settings: {
-                        slidesToShow: 1,
-                        centerPadding: '20px'
-                    }
-                },
-                {
-                    breakpoint: 320,
-                    settings: {
-                        slidesToShow: 1,
-                        centerPadding: '10px'
-                    }
-                }
-            ]
-        });
-    });
-</script>
-
-<script src="{{ asset('js/header/typewords.js') }}"></script>
+<script src="{{ asset('js/projets/script.js') }}"></script>
 
 </body>
 </html>

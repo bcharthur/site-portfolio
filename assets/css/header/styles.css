@@ -234,3 +234,159 @@ body{
 }
 
 /* Autres styles existants */
+/* Styles pour la div 'actus' */
+.actus {
+    color: #0e243b;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.contact-group {
+    flex-wrap: nowrap;
+}
+
+.contact-group h5 {
+    white-space: nowrap;
+}
+
+/* Styles pour la div 'actus' */
+.actus {
+    color: #0e243b;
+    background-color: white;
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 800px; /* Limite la largeur maximale */
+    width: 100%; /* Prend toute la largeur possible */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.contact-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.buttons-group {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.buttons-group .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 0.5rem;
+}
+
+.buttons-group .btn:last-child {
+    margin-right: 0;
+}
+
+/* Ajustement des tailles de police et espacements pour la div 'actus' */
+.actus h1 {
+    font-size: 1.8rem;
+}
+
+.actus h5 {
+    font-size: 1.2rem;
+}
+
+.actus .btn {
+    font-size: 1rem;
+    padding: 0.5rem 0.75rem;
+}
+
+.actus i {
+    font-size: 1.8rem;
+}
+
+/* Media queries pour petits écrans */
+@media (max-width: 576px) {
+    .actus {
+        width: 95%; /* Augmente la largeur sur mobile */
+    }
+    .contact-group {
+        flex-direction: column;
+        align-items: center;
+    }
+    .buttons-group {
+        flex-direction: row;
+        justify-content: center;
+    }
+    .contact-group h5 {
+        margin-bottom: 0.5rem;
+    }
+    .buttons-group .btn {
+        margin-right: 0.5rem;
+    }
+    .buttons-group .btn:last-child {
+        margin-right: 0;
+    }
+    .actus h1 {
+        font-size: 1.6rem;
+    }
+    .actus h5 {
+        font-size: 1.1rem;
+    }
+    .actus .btn {
+        font-size: 1rem;
+        padding: 0.5rem 0.75rem;
+    }
+    .actus i {
+        font-size: 1.8rem;
+    }
+}
+
+/* Ajustements pour écrans moyens */
+@media (min-width: 576px) and (max-width: 768px) {
+    .actus h1 {
+        font-size: 1.8rem;
+    }
+    .actus h5 {
+        font-size: 1.2rem;
+    }
+    .actus .btn {
+        font-size: 1.1rem;
+        padding: 0.5rem 0.75rem;
+    }
+    .actus i {
+        font-size: 2rem;
+    }
+}
+
+/* Media queries pour écrans larges */
+@media (min-width: 768px) {
+    .actus h1 {
+        font-size: 2rem;
+    }
+    .actus h5 {
+        font-size: 1.3rem;
+    }
+    .actus .btn {
+        font-size: 1.2rem;
+        padding: 0.6rem 1rem;
+    }
+    .actus i {
+        font-size: 2.2rem;
+    }
+}
+
+/* Media queries pour écrans extra-larges */
+@media (min-width: 992px) {
+    .actus h1 {
+        font-size: 2.2rem;
+    }
+    .actus h5 {
+        font-size: 1.4rem;
+    }
+    .actus .btn {
+        font-size: 1.3rem;
+        padding: 0.7rem 1.2rem;
+    }
+    .actus i {
+        font-size: 2.4rem;
+    }
+}
