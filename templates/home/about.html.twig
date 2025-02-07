@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>À propos de moi</title>
-    <link href="{{ asset('styles/about/styles.css') }}" rel="stylesheet" />
 </head>
 <body>
 
@@ -23,7 +22,7 @@
             <!-- Colonne pour l'image -->
             <div class="col-md-6 text-center mb-4 mb-md-0">
                 <div class="image-container-about">
-                    <img class="masthead-avatar-about img-fluid" src="{{ asset('img/a propos.gif') }}" alt="Avatar image" />
+                    <img class="masthead-avatar-about img-fluid" src="{{ asset('/build/img/a propos.gif') }}" alt="Avatar image" />
                 </div>
             </div>
             <!-- Colonne pour le texte -->
@@ -39,7 +38,5 @@
 
     </div>
 </section>
-<script src="{{ asset('js/about/script.js') }}"></script>
-
 </body>
 </html>

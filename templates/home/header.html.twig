@@ -2,7 +2,6 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <link href="{{ asset('styles/header/styles.css') }}" rel="stylesheet" />
 </head>
 <body>
 
@@ -68,11 +67,7 @@
                 <!-- Colonne pour l'image à droite -->
                 <div class="col-md-6 order-1 order-md-2 text-center mb-4 mb-md-0">
                     <div class="image-container">
-                        <img
-                                src="{{ asset('img/bouchaud.png') }}"
-                                alt="Avatar image"
-                                class="img-fluid"
-                        />
+                        <img src="{{ asset('/build/img/bouchaud.png') }}" alt="Avatar image" class="img-fluid"/>
                     </div>
                 </div>
 
@@ -86,16 +81,14 @@
             <!-- Boutons CV et Contactez-moi alignés au centre et de même taille -->
             <div class="d-flex justify-content-center mt-4">
                 <div class="row g-2" style="width: 300px;">
-                    <div class="col">
-                        <a href="{{ asset('files/cv/CV_Arthur_Bouchaud.pdf') }}" class="btn btn-outline-light w-100" download>
+                    <div class="col-12">
+                        <a href="{{ asset('/build/files/cv/CV_Arthur_Bouchaud.pdf') }}" class="btn btn-outline-light w-100" download>
                             <i class="fa-solid fa-download"></i> CV
                         </a>
                     </div>
-                    <div class="col">
-                        <a class="btn btn-custom w-100" href="#contact">Contactez-moi</a>
-                    </div>
                 </div>
             </div>
+
             <!-- Boutons des réseaux sociaux sur une même ligne -->
             <div class="d-flex justify-content-center mt-4">
                 <div class="d-flex gap-2">
@@ -150,9 +143,9 @@
 
 <!-- Scripts Existants -->
 
-<script src="{{ asset('js/header/typewords.js') }}"></script>
-<script src="{{ asset('js/header/contact.js') }}"></script>
-<script src="{{ asset('js/header/script.js') }}"></script>
+<script src="{{ asset('/build/js/header_typewords.js') }}"></script>
+<script src="{{ asset('/build/js/header_contact.js') }}"></script>
+<script src="{{ asset('/build/js/header_scripts.js') }}"></script>
 
 </body>
 </html>
