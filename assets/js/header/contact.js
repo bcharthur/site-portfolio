@@ -1,3 +1,4 @@
+// console.log("js/header/contact.js = chargé")
 document.addEventListener('DOMContentLoaded', function () {
     // Fonction pour détecter si l'utilisateur est sur un appareil mobile
     function isMobileDevice() {

@@ -6,6 +6,8 @@ framework:
     # Note that the session will be started ONLY if you read or write from it.
     session: true
 
+    asset_mapper: false
+
     #esi: true
     #fragments: true
 

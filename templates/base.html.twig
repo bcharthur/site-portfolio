@@ -1,48 +1,68 @@
+{# templates/base.html.twig #}
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-        <meta name="description" content="" />
-        <meta name="author" content="" />
-        <title>Site - Arthur Bouchaud</title>
-        <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/favicon.ico" />
-        <!-- Font Awesome icons (free version)-->
-        <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
-        <!-- Google fonts-->
-        <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
-        <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
-        <!-- Slick CSS -->
-        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-        <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
-        <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="{{ asset('styles/base/styles.css') }}" rel="stylesheet" />
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="description" content="" />
+    <meta name="author" content="" />
+    <title>Site - Arthur Bouchaud</title>
 
-        <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-        {% block stylesheets %}
-        {% endblock %}
+    <!-- Favicon-->
+    <link rel="icon" type="image/x-icon" href="{{ asset('/build/img/favicon.ico') }}" />
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
+    <!-- Font Awesome icons (free version)-->
+    <script src="https://use.fontawesome.com/releases/v6.3.0/js/all.js" crossorigin="anonymous"></script>
 
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
 
-        <!-- FontAwesome JS-->
-        <script src="https://kit.fontawesome.com/b574da12d9.js" crossorigin="anonymous"></script>
+    <!-- Slick CSS -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick-theme.css"/>
 
-        <!-- Bootstrap core JS-->
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
 
-{#        <script src="https://cdn.startbootstrap.com/sb-forms-latest.js"></script>#}
+    <!-- Webpack Encore CSS -->
+    {% block stylesheets %}
+        {{ encore_entry_link_tags('app') }}
+        {{ encore_entry_link_tags('base_styles') }}
+        {{ encore_entry_link_tags('about_styles') }}
+        {{ encore_entry_link_tags('header_styles') }}
+        {{ encore_entry_link_tags('navigation_styles') }}
+        {{ encore_entry_link_tags('parcours_styles') }}
+        {{ encore_entry_link_tags('projets_styles') }}
+    {% endblock %}
+</head>
+<body>
+{% block body %}
+    {# Inclure le header partial #}
+    {% include 'partials/header.html.twig' %}
 
-        <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    {# Contenu spécifique à chaque page #}
+    {% block content %}{% endblock %}
+{% endblock %}
 
+<!-- FontAwesome JS-->
+<script src="https://kit.fontawesome.com/b574da12d9.js" crossorigin="anonymous"></script>
 
-        <!-- Core theme JS-->
-        <script src="{{ asset('js/navbar-transition.js') }}"></script>
-    </body>
+<!-- Bootstrap core JS-->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- Swiper JS (si nécessaire) -->
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+<!-- Webpack Encore JS -->
+{% block javascripts %}
+    {{ encore_entry_script_tags('app') }}
+    {{ encore_entry_script_tags('navbar_transition') }}
+    {{ encore_entry_script_tags('about') }}
+    {{ encore_entry_script_tags('projets') }}
+    {{ encore_entry_script_tags('header_typewords') }}
+    {{ encore_entry_script_tags('header_scripts') }}
+    {{ encore_entry_script_tags('header_contact') }}
+{% endblock %}
+</body>
 </html>

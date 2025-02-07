@@ -1,3 +1,4 @@
+// console.log("js/header/typewords.js = chargé")
 document.addEventListener('DOMContentLoaded', () => {
     const words = ["Full-Stack", "Passionné", "CTF Player"];
     let wordIndex = 0;

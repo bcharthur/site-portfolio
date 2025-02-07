@@ -1,3 +1,4 @@
+// console.log("js/navbar-transition.js = chargé")
 // Fonction debounce optimisée
 function debounce(func, wait = 100, immediate = false) {
     let timeout;

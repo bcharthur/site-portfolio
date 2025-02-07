@@ -1,3 +1,4 @@
+// console.log("js/projets/script.js = chargé")
 $(document).ready(function(){
     $('.challenge-slider').slick({
         infinite: true,
